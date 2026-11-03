@@ -37,7 +37,12 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Online Debug APK
-        run: ./gradlew :app:assembleOnlineDebug -x lint --stacktrace
+        run: |
+          ./gradlew :app:assembleOnlineDebug -x lint --stacktrace 2>&1 | tee /tmp/build.log || {
+            echo "::error::Build failed! Last 50 lines of log:"
+            tail -n 50 /tmp/build.log
+            exit 1
+          }
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
