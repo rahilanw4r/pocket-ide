@@ -51,6 +51,7 @@ import com.pocketide.app.ui.theme.PocketCyan
 import com.pocketide.app.ui.theme.PocketEmerald
 import com.pocketide.app.ui.theme.PocketIndigo
 import com.pocketide.app.ui.theme.PocketObsidian
+import com.pocketide.app.ui.theme.PocketPrimaryBlue
 import com.pocketide.app.ui.theme.PocketPurple
 import com.pocketide.app.ui.theme.PocketSurface
 import com.pocketide.app.ui.theme.PocketSurfaceElevated
