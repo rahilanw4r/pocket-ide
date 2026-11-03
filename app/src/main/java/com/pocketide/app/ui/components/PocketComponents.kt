@@ -119,7 +119,7 @@ fun PocketStatusPill(
             .clip(RoundedCornerShape(6.dp))
             .background(color.copy(alpha = 0.12f))
             .border(1.dp, color.copy(alpha = 0.35f), RoundedCornerShape(6.dp))
-            .padding(horizontal = 7.dp, vertical = 2.5.dp),
+            .padding(horizontal = 8.dp, vertical = 3.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
@@ -132,10 +132,10 @@ fun PocketStatusPill(
         Text(
             text = statusText,
             color = color,
-            fontSize = 10.5.sp,
+            fontSize = 11.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = FontFamily.Monospace,
-            letterSpacing = 0.3.sp
+            letterSpacing = 0.2.sp
         )
     }
 }
@@ -195,23 +195,24 @@ fun DeveloperKeyToolbar(
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
                 .padding(horizontal = 6.dp, vertical = 2.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(5.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             devKeys.forEach { (label, value) ->
                 Box(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(4.dp))
+                        .height(36.dp)
+                        .clip(RoundedCornerShape(6.dp))
                         .background(PocketSurfaceElevated)
-                        .border(1.dp, PocketBorder, RoundedCornerShape(4.dp))
+                        .border(1.dp, PocketBorder, RoundedCornerShape(6.dp))
                         .clickable { onKeyPress(value) }
-                        .padding(horizontal = 8.dp, vertical = 5.dp),
+                        .padding(horizontal = 10.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = label,
                         color = PocketTextPrimary,
-                        fontSize = 11.sp,
+                        fontSize = 11.5.sp,
                         fontWeight = FontWeight.SemiBold,
                         fontFamily = FontFamily.Monospace
                     )
@@ -225,17 +226,18 @@ fun DeveloperKeyToolbar(
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
                 .padding(horizontal = 6.dp, vertical = 2.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(5.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             quickSnippets.forEach { (label, command) ->
                 Box(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(4.dp))
+                        .height(30.dp)
+                        .clip(RoundedCornerShape(6.dp))
                         .background(PocketSurfaceElevated)
-                        .border(1.dp, PocketBorder, RoundedCornerShape(4.dp))
+                        .border(1.dp, PocketBorder, RoundedCornerShape(6.dp))
                         .clickable { onSnippetRun(command) }
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                        .padding(horizontal = 8.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Row(
@@ -325,7 +327,7 @@ fun ReasoningChainBlock(
                     Text(
                         text = "(${tokenCount}t)",
                         color = PocketTextMuted,
-                        fontSize = 10.sp,
+                        fontSize = 11.sp,
                         fontFamily = FontFamily.Monospace
                     )
                 }
@@ -511,9 +513,9 @@ fun CompactTimelineRow(
                 Text(
                     text = item.detail,
                     color = PocketTextSecondary,
-                    fontSize = 10.5.sp,
+                    fontSize = 11.sp,
                     fontFamily = FontFamily.Monospace,
-                    lineHeight = 14.sp
+                    lineHeight = 15.sp
                 )
             }
         }

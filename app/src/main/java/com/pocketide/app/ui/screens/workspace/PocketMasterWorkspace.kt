@@ -472,10 +472,9 @@ fun PocketMasterWorkspace(
                     .fillMaxWidth()
                     .navigationBarsPadding()
                     .padding(horizontal = 14.dp, vertical = 6.dp),
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(12.dp),
                 color = PocketSurface,
-                border = BorderStroke(1.dp, PocketBorder),
-                shadowElevation = 6.dp
+                border = BorderStroke(1.dp, PocketBorder)
             ) {
                 Row(
                     modifier = Modifier
@@ -899,7 +898,7 @@ private fun WorkspaceDockItem(
                         Text(
                             text = badge,
                             color = Color.White,
-                            fontSize = 8.5.sp,
+                            fontSize = 10.sp,
                             fontFamily = FontFamily.Monospace,
                             fontWeight = FontWeight.Bold
                         )
@@ -909,7 +908,7 @@ private fun WorkspaceDockItem(
             Text(
                 text = label,
                 color = if (isActive) PocketPrimaryBlue else PocketTextMuted,
-                fontSize = 10.5.sp,
+                fontSize = 11.sp,
                 fontWeight = if (isActive) FontWeight.Bold else FontWeight.Medium
             )
         }

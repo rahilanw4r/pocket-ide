@@ -433,10 +433,10 @@ fun AgentScreen(
                                                 ) {
                                                     Text(
                                                         tier,
-                                                        fontSize = 9.sp,
+                                                        fontSize = 11.sp,
                                                         fontWeight = FontWeight.Bold,
                                                         color = if (isSelected) PocketIndigo else MaterialTheme.colorScheme.onSurfaceVariant,
-                                                        modifier = Modifier.padding(horizontal = 5.dp, vertical = 1.dp),
+                                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
                                                     )
                                                 }
                                             }
@@ -540,8 +540,8 @@ fun AgentScreen(
                             statusProviderMessage?.let { providerMessage ->
                                 Text(
                                     "Provider: $providerMessage",
-                                    fontSize = 10.sp,
-                                    lineHeight = 14.sp,
+                                    fontSize = 11.sp,
+                                    lineHeight = 15.sp,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     modifier = Modifier.padding(start = 23.dp, top = 5.dp),
                                 )
@@ -730,7 +730,7 @@ fun AgentScreen(
                                             )
                                             if (option.isFree) {
                                                 Spacer(Modifier.width(6.dp))
-                                                Text("FREE", color = Color(0xFF58C99C), fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                                                Text("FREE", color = PocketEmerald, fontSize = 11.sp, fontWeight = FontWeight.Bold)
                                             }
                                         }
                                         if (option.displayName != option.id) {
@@ -808,7 +808,7 @@ fun AgentScreen(
                             Spacer(Modifier.width(5.dp))
                             Text(
                                 if (pillLoading) "Checking" else label,
-                                fontSize = 10.sp,
+                                fontSize = 11.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 color = dot,
                             )
@@ -954,7 +954,7 @@ fun AgentScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                                    Text("Active Model", color = PocketTextMuted, fontSize = 10.5.sp)
+                                    Text("Active Model", color = PocketTextMuted, fontSize = 11.sp)
                                     Text(
                                         text = if (isAntigravity) {
                                             "Antigravity • ${formatAntigravityModelName(state.antigravityModel)}"
@@ -1113,7 +1113,7 @@ fun AgentScreen(
                                         } else {
                                             "Processing files"
                                         },
-                                        fontSize = 10.sp,
+                                        fontSize = 11.sp,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier.weight(1f),
                                     )
@@ -1124,7 +1124,7 @@ fun AgentScreen(
                                                 append(" · ${formatAgentBytes(it)}/s")
                                             }
                                         },
-                                        fontSize = 10.sp,
+                                        fontSize = 11.sp,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
                                 }
@@ -1735,8 +1735,8 @@ private fun AgentAntigravityCard(
                         Spacer(Modifier.width(7.dp))
                         Text(
                             message,
-                            fontSize = 10.sp,
-                            lineHeight = 14.sp,
+                            fontSize = 11.sp,
+                            lineHeight = 15.sp,
                             color = if (state.apiPingStatus == ApiPingStatus.FAILED) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.weight(1f),
                         )
@@ -1746,8 +1746,8 @@ private fun AgentAntigravityCard(
 
             Text(
                 "Automatic tool approval · Runs inside the private Linux workspace",
-                fontSize = 10.sp,
-                lineHeight = 14.sp,
+                fontSize = 11.sp,
+                lineHeight = 15.sp,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f),
                 modifier = Modifier.fillMaxWidth(),
@@ -1992,10 +1992,10 @@ private fun AgentProviderCard(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(if (statusOk) Icons.Default.Info else Icons.Default.Warning, null, tint = if (statusOk) PocketIndigo else MaterialTheme.colorScheme.error, modifier = Modifier.size(14.dp))
                         Spacer(Modifier.width(7.dp))
-                        Text(status, fontSize = 10.sp, lineHeight = 14.sp, color = if (statusOk) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error, modifier = Modifier.weight(1f))
+                        Text(status, fontSize = 11.sp, lineHeight = 15.sp, color = if (statusOk) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error, modifier = Modifier.weight(1f))
                     }
                     statusProviderMessage?.let { providerMessage ->
-                        Text("Provider: $providerMessage", fontSize = 10.sp, lineHeight = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start = 21.dp, top = 4.dp))
+                        Text("Provider: $providerMessage", fontSize = 11.sp, lineHeight = 15.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start = 21.dp, top = 4.dp))
                     }
                 }
             }
@@ -2023,8 +2023,8 @@ private fun AgentProviderCard(
                 if (!keysExpanded) {
                     Text(
                         keyStatus.message,
-                        fontSize = 10.sp,
-                        lineHeight = 14.sp,
+                        fontSize = 11.sp,
+                        lineHeight = 15.sp,
                         color = when (keyStatus.successful) {
                             true -> Color(0xFF2E9D72)
                             false -> MaterialTheme.colorScheme.error
@@ -2035,8 +2035,8 @@ private fun AgentProviderCard(
                     keyStatus.providerMessage?.let { providerMessage ->
                         Text(
                             "Provider: $providerMessage",
-                            fontSize = 10.sp,
-                            lineHeight = 14.sp,
+                            fontSize = 11.sp,
+                            lineHeight = 15.sp,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(start = 48.dp, end = 8.dp, bottom = 8.dp),
                         )
@@ -2069,7 +2069,7 @@ private fun AgentProviderCard(
                                 ) {
                                     Column(Modifier.weight(1f)) {
                                         Text(key.name, fontWeight = FontWeight.Medium, fontSize = 13.sp)
-                                        Text(if (key.isActive) "Active" else "Tap to activate", fontSize = 10.sp, color = if (key.isActive) PocketIndigo else MaterialTheme.colorScheme.onSurfaceVariant)
+                                        Text(if (key.isActive) "Active" else "Tap to activate", fontSize = 11.sp, color = if (key.isActive) PocketIndigo else MaterialTheme.colorScheme.onSurfaceVariant)
                                     }
                                     AgentSelectionDot(key.isActive)
                                     IconButton(onClick = { onRemoveKey(key.id) }) {
@@ -2082,9 +2082,9 @@ private fun AgentProviderCard(
                                         else Icon(if (it.successful) Icons.Default.CheckCircle else Icons.Default.Warning, null, tint = if (it.successful) Color(0xFF2E9D72) else MaterialTheme.colorScheme.error, modifier = Modifier.size(14.dp))
                                         Spacer(Modifier.width(7.dp))
                                         Column(Modifier.weight(1f)) {
-                                            Text(it.message, fontSize = 10.sp, lineHeight = 14.sp, color = if (it.successful == false) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant)
+                                            Text(it.message, fontSize = 11.sp, lineHeight = 15.sp, color = if (it.successful == false) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant)
                                             it.providerMessage?.let { providerMessage ->
-                                                Text("Provider: $providerMessage", fontSize = 10.sp, lineHeight = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                                Text("Provider: $providerMessage", fontSize = 11.sp, lineHeight = 15.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                             }
                                         }
                                     }
@@ -2224,7 +2224,7 @@ private fun AgentUpdateBlock(
                 Text("Runtime updates", fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
                 Text(
                     state.agentUpdateMessage ?: "Installed agents stay current",
-                    fontSize = 10.5.sp,
+                    fontSize = 11.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
@@ -2266,7 +2266,7 @@ private fun AgentUpdateBlock(
                                 Text(agent.title, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                                 Text("v${update.installedVersion} → v${update.latestVersion}", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
-                            Text("UPDATE", color = PocketEmerald, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold)
+                            Text("UPDATE", color = PocketEmerald, fontSize = 11.sp, fontWeight = FontWeight.ExtraBold)
                         }
                         if (updating) {
                             state.agentUpdateMessage?.let { Text(it, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant) }

@@ -60,7 +60,6 @@ import com.pocketide.app.R
 import com.pocketide.app.ui.components.PocketGlassCard
 import com.pocketide.app.ui.components.PocketPrimaryButton
 import com.pocketide.app.ui.components.PocketSecondaryButton
-import com.pocketide.app.ui.components.liquidAuraBorder
 import com.pocketide.app.ui.components.liquidBounceClick
 import com.pocketide.app.ui.theme.PocketAmber
 import com.pocketide.app.ui.theme.PocketBorder

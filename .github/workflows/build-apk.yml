@@ -61,15 +61,14 @@ jobs:
           ### Pocket IDE ${TAG}
           <!-- versionCode: ${VERSION_CODE} -->
 
-          **Impeccable UI/UX Refinement, Mobile Developer Keyboard Strip, and Pinned Code Editor Line Numbers.**
+          **Minimal, Premium UI/UX Polish, Design System Alignment, and Accessibility Floor.**
 
           #### What's New:
-          - **Reimagined Home Screen**: Interactive "What do you want to build?" fast launcher with instant starter template chips (React + Vite, Python, Android Compose, REST API) and a 4-tile quick action grid.
-          - **Pinned Line Numbers in Code Editor**: Fixed horizontal scrolling in the code editor — line numbers remain permanently pinned in a dedicated left gutter while code scrolls horizontally.
-          - **Mobile Developer Symbol Strip**: On-screen keyboard symbol row directly inside the code editor (\`{ } ( ) [ ] ; = " ' < > / \ : _ - + * $ & | ! TAB\`) for rapid typing without switching keyboard pages.
-          - **Dynamic Theming & Contrast Fix**: Removed hardcoded dark palette leaks across all screens to ensure seamless light and dark mode adaptation.
-          - **Floating Navigation Dock**: Upgraded both root and workspace docks to sleek, elevated floating bars with larger icons, smooth active state pills, and status badges.
-          - **Two-Line Command Center**: Enhanced the Command Center (⌘) dialog with descriptive subtitles and clear action classifications.
+          - **Cohesive Design System Tokens**: Aligned obsidian background (\`#141414\`), grounded surface (\`#1C1C1C\`), and elevated controls (\`#282828\`) with crisp hairline borders and pure primary action blue (\`#3B82F6\`).
+          - **Accessibility & Typography Floor**: Enforced an 11sp minimum legibility floor across all functional badges, tags, timestamps, and status messages, with high WCAG contrast.
+          - **Tactile Non-Bouncy Interaction**: Replaced bouncy spring animations with precise, tactile non-bouncing feedback on mobile buttons and chips.
+          - **Developer Keyboard Hardware Sizing**: Elevated virtual accessory key heights to 36dp with comfortable padding for fast, error-free typing on mobile touchscreens.
+          - **Dock & Studio Refinement**: Streamlined floating bottom navigation docks and Code Studio tabs with high-contrast active indicators and comfortable tap targets.
           EOF
 
           gh release create "$TAG" "$APK_NAME" \

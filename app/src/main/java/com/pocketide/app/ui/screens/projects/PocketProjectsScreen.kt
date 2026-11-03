@@ -493,9 +493,9 @@ fun PocketProjectsScreen(
                                             modifier = Modifier
                                                 .clip(RoundedCornerShape(4.dp))
                                                 .background(PocketEmerald.copy(alpha = 0.15f))
-                                                .padding(horizontal = 4.dp, vertical = 1.dp)
+                                                .padding(horizontal = 6.dp, vertical = 2.dp)
                                         ) {
-                                            Text("RUNNING", color = PocketEmerald, fontSize = 9.sp, fontWeight = FontWeight.Bold)
+                                            Text("RUNNING", color = PocketEmerald, fontSize = 11.sp, fontWeight = FontWeight.Bold)
                                         }
                                     }
                                 }

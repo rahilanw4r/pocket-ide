@@ -163,12 +163,12 @@ fun PocketHomeScreen(
                                     .clip(RoundedCornerShape(4.dp))
                                     .background(PocketEmerald.copy(alpha = 0.12f))
                                     .border(1.dp, PocketEmerald.copy(alpha = 0.3f), RoundedCornerShape(4.dp))
-                                    .padding(horizontal = 5.dp, vertical = 1.dp)
+                                    .padding(horizontal = 6.dp, vertical = 2.dp)
                             ) {
                                 Text(
                                     text = "PRoot ARM64",
                                     color = PocketEmerald,
-                                    fontSize = 9.5.sp,
+                                    fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
                                     fontFamily = FontFamily.Monospace
                                 )
@@ -290,7 +290,7 @@ fun PocketHomeScreen(
                             Text(
                                 text = "Active Coding Engine",
                                 color = PocketTextMuted,
-                                fontSize = 10.5.sp,
+                                fontSize = 11.sp,
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
@@ -462,7 +462,7 @@ fun PocketHomeScreen(
                         title = "Quick Sandbox",
                         subtitle = "Instant container",
                         icon = Icons.Default.Bolt,
-                        accentColor = PocketCyan,
+                        accentColor = PocketPrimaryBlue,
                         onClick = onCreateQuickProject,
                         modifier = Modifier.weight(1f)
                     )
@@ -476,7 +476,7 @@ fun PocketHomeScreen(
                         title = "Import Project",
                         subtitle = "ZIP or Git clone",
                         icon = Icons.Default.FolderOpen,
-                        accentColor = PocketEmerald,
+                        accentColor = PocketTextSecondary,
                         onClick = onViewAllProjects,
                         modifier = Modifier.weight(1f)
                     )
@@ -626,13 +626,13 @@ fun PocketHomeScreen(
                                                         Box(
                                                             modifier = Modifier
                                                                 .clip(RoundedCornerShape(4.dp))
-                                                                .background(PocketCyan.copy(alpha = 0.12f))
-                                                                .padding(horizontal = 4.dp, vertical = 1.dp)
+                                                                .background(PocketPrimaryBlue.copy(alpha = 0.12f))
+                                                                .padding(horizontal = 5.dp, vertical = 2.dp)
                                                         ) {
                                                             Text(
                                                                 text = "Sandbox",
-                                                                color = PocketCyan,
-                                                                fontSize = 9.5.sp,
+                                                                color = PocketPrimaryBlue,
+                                                                fontSize = 11.sp,
                                                                 fontWeight = FontWeight.Bold
                                                             )
                                                         }

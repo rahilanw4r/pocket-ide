@@ -2053,10 +2053,9 @@ private fun RootScreenHost(
                         .fillMaxWidth()
                         .navigationBarsPadding()
                         .padding(horizontal = 14.dp, vertical = 6.dp),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(12.dp),
                     color = PocketSurface,
-                    border = BorderStroke(1.dp, PocketBorder),
-                    shadowElevation = 6.dp
+                    border = BorderStroke(1.dp, PocketBorder)
                 ) {
                     Row(
                         modifier = Modifier
@@ -2071,7 +2070,7 @@ private fun RootScreenHost(
                                 modifier = Modifier
                                     .weight(1f)
                                     .heightIn(min = 44.dp)
-                                    .clip(RoundedCornerShape(10.dp))
+                                    .clip(RoundedCornerShape(8.dp))
                                     .background(if (selected) PocketPrimaryBlue.copy(alpha = 0.12f) else Color.Transparent)
                                     .clickable { screen = tab }
                                     .padding(vertical = 6.dp),
@@ -2090,7 +2089,7 @@ private fun RootScreenHost(
                                     Text(
                                         text = tab.label,
                                         color = if (selected) PocketPrimaryBlue else PocketTextMuted,
-                                        fontSize = 10.5.sp,
+                                        fontSize = 11.sp,
                                         fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
                                         maxLines = 1
                                     )

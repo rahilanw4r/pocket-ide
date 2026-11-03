@@ -342,7 +342,7 @@ private fun StudioTabButton(
                     Text(
                         text = "$count",
                         color = if (badgeColor != null) Color.White else PocketTextMuted,
-                        fontSize = 10.sp,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily.Monospace
                     )
@@ -441,6 +441,7 @@ private fun FileTreeItem(entry: WorkspaceEntry, onOpen: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .heightIn(min = 40.dp)
             .clip(RoundedCornerShape(6.dp))
             .clickable(enabled = !entry.isDirectory, onClick = onOpen)
             .padding(start = indent, top = 6.dp, bottom = 6.dp, end = 8.dp),
@@ -552,11 +553,11 @@ private fun DiffFileCard(
                     Text("-${change.deletions}", color = PocketRose, fontSize = 11.sp, fontWeight = FontWeight.Bold)
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(start = 8.dp)) {
-                    IconButton(onClick = onKeep, modifier = Modifier.size(24.dp)) {
-                        Icon(Icons.Default.Check, contentDescription = "Accept", tint = PocketEmerald, modifier = Modifier.size(16.dp))
+                    IconButton(onClick = onKeep, modifier = Modifier.size(32.dp)) {
+                        Icon(Icons.Default.Check, contentDescription = "Accept", tint = PocketEmerald, modifier = Modifier.size(17.dp))
                     }
-                    IconButton(onClick = onUndo, modifier = Modifier.size(24.dp)) {
-                        Icon(Icons.AutoMirrored.Filled.Undo, contentDescription = "Revert", tint = PocketRose, modifier = Modifier.size(16.dp))
+                    IconButton(onClick = onUndo, modifier = Modifier.size(32.dp)) {
+                        Icon(Icons.AutoMirrored.Filled.Undo, contentDescription = "Revert", tint = PocketRose, modifier = Modifier.size(17.dp))
                     }
                 }
             }

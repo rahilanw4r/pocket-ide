@@ -357,7 +357,7 @@ fun CommandCenterDialog(
                                         Text(
                                             text = action.tag,
                                             color = PocketPrimaryBlue,
-                                            fontSize = 10.sp,
+                                            fontSize = 11.sp,
                                             fontFamily = FontFamily.Monospace,
                                             fontWeight = FontWeight.SemiBold
                                         )

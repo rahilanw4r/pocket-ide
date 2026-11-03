@@ -563,7 +563,7 @@ private fun AttachmentRowItem(
                     Text(
                         text = sizeStr,
                         color = PocketTextMuted,
-                        fontSize = 10.sp,
+                        fontSize = 11.sp,
                         fontFamily = FontFamily.Monospace
                     )
                 }
@@ -571,7 +571,7 @@ private fun AttachmentRowItem(
         }
         IconButton(
             onClick = onRemove,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(28.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.Close,
@@ -975,9 +975,9 @@ private fun TaskFailureCard(
                     Text(
                         text = details,
                         color = PocketTextSecondary,
-                        fontSize = 10.5.sp,
+                        fontSize = 11.sp,
                         fontFamily = FontFamily.Monospace,
-                        lineHeight = 14.sp
+                        lineHeight = 15.sp
                     )
                 }
             }
