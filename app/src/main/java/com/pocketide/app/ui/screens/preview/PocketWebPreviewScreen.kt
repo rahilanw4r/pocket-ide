@@ -598,7 +598,7 @@ fun PocketWebPreviewScreen(
                                 ) {
                                     Icon(Icons.Default.Refresh, contentDescription = null, tint = PocketEmerald, modifier = Modifier.size(14.dp))
                                     Text(
-                                        text = "Active server on :$aliveAlternative — Tap to switch",
+                                        text = "Active server on :$aliveAlternative: Tap to switch",
                                         color = PocketEmerald,
                                         fontSize = 11.5.sp,
                                         fontWeight = FontWeight.SemiBold
@@ -623,7 +623,7 @@ fun PocketWebPreviewScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "Stack default :$stackPort ($projectWebKind) — Tap to switch",
+                                    text = "Stack default :$stackPort ($projectWebKind): Tap to switch",
                                     color = PocketTextPrimary,
                                     fontSize = 11.5.sp,
                                     fontWeight = FontWeight.Medium
@@ -647,7 +647,7 @@ fun PocketWebPreviewScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "Static HTML server :$staticPort — Tap to switch",
+                                    text = "Static HTML server :$staticPort: Tap to switch",
                                     color = PocketTextPrimary,
                                     fontSize = 11.5.sp,
                                     fontWeight = FontWeight.Medium

@@ -166,7 +166,7 @@ class AntigravityRuntimeBridge(
     /**
      * Lightweight connectivity probe: sends a tiny hello to agy and returns its
      * reply text. No foreground service, no checkpoints, no saved conversation.
-     * The timeout is intentionally internal — callers only see success/failure.
+     * The timeout is intentionally internal: callers only see success/failure.
      */
     suspend fun hello(timeoutMillis: Long = HELLO_TIMEOUT_MILLIS): String = withContext(Dispatchers.IO) {
         if (!installer.isAgentInstalled(com.pocketide.app.model.AgentKind.ANTIGRAVITY)) {

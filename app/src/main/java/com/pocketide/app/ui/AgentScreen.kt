@@ -794,10 +794,10 @@ fun AgentScreen(
                     }
                 },
                 actions = {
-                    // Top Bar Live Status Pill
+                    // Top Bar Live Status Badge
                     Surface(
                         color = pillBg,
-                        shape = RoundedCornerShape(50),
+                        shape = RoundedCornerShape(6.dp),
                         border = BorderStroke(1.dp, dot.copy(alpha = 0.35f)),
                     ) {
                         Row(
@@ -2295,7 +2295,7 @@ private fun formatAgentBytes(bytes: Long): String = when {
 
 /**
  * Fixed-size three-dot wave. All three dots are always laid out, only their
- * alpha animates — so surrounding text never shifts while loading.
+ * alpha animates: surrounding text never shifts while loading.
  */
 @Composable
 private fun AgentTypingDots(

@@ -282,7 +282,7 @@ fun classifyRuntimeFailure(reason: String): ClassifiedRuntimeError {
     return when {
         "stopped" in lower || "cancelled" in lower || "canceled" in lower ->
             ClassifiedRuntimeError(
-                title = "Task stopped — user cancelled the task",
+                title = "Task stopped: user cancelled the task",
                 message = "Task execution was cancelled by the user.",
                 details = reason,
             )
@@ -292,7 +292,7 @@ fun classifyRuntimeFailure(reason: String): ClassifiedRuntimeError {
             "unable to resolve host" in lower || "broken pipe" in lower || "network is unreachable" in lower ||
             "no route to host" in lower ->
             ClassifiedRuntimeError(
-                title = "Task failed — network connection reset",
+                title = "Task failed: network connection reset",
                 message = "Connection reset by peer or network lost. Check internet connection or VPN.",
                 details = reason,
             )
@@ -300,14 +300,14 @@ fun classifyRuntimeFailure(reason: String): ClassifiedRuntimeError {
             "insufficient_quota" in lower || "out of credits" in lower || "credit balance" in lower ||
             "payment required" in lower || "balance too low" in lower ->
             ClassifiedRuntimeError(
-                title = "Task failed — insufficient API credits",
+                title = "Task failed: insufficient API credits",
                 message = "Task could not continue due to credit limits.",
                 details = reason,
                 isCreditError = true,
             )
         "user not found" in lower ->
             ClassifiedRuntimeError(
-                title = "Task failed — provider authentication required",
+                title = "Task failed: provider authentication required",
                 message = "User not found. Check the API key and provider account.",
                 details = reason,
                 isAuthError = true,
@@ -315,7 +315,7 @@ fun classifyRuntimeFailure(reason: String): ClassifiedRuntimeError {
         Regex("""\b(401|403)\b""").containsMatchIn(lower) || "authentication" in lower || "invalid api key" in lower ||
             "unauthorized" in lower || "autherror" in lower ->
             ClassifiedRuntimeError(
-                title = "Task failed — provider authentication required",
+                title = "Task failed: provider authentication required",
                 message = "The provider rejected the saved API key or session expired.",
                 details = reason,
                 isAuthError = true,
@@ -323,22 +323,22 @@ fun classifyRuntimeFailure(reason: String): ClassifiedRuntimeError {
         "gradle" in lower || "assembledebug" in lower || "build failed" in lower ||
             "compilation error" in lower || "compilation failed" in lower || "compile error" in lower ->
             ClassifiedRuntimeError(
-                title = "Task failed — Gradle build failed",
+                title = "Task failed: Gradle build failed",
                 message = "Build or compilation failed during execution.",
                 details = reason,
             )
         Regex("""\b429\b""").containsMatchIn(lower) || "rate limit" in lower || "too many requests" in lower ->
             ClassifiedRuntimeError(
-                title = "Task failed — provider rate limit reached",
+                title = "Task failed: provider rate limit reached",
                 message = "Provider rate limit reached. Please wait a moment.",
                 details = reason,
             )
         else -> {
             val firstLine = reason.trim().lineSequence().firstOrNull()?.take(50)?.trimEnd('.')
             val cleanTitle = if (!firstLine.isNullOrBlank() && firstLine.length in 5..45 && !firstLine.startsWith("{")) {
-                "Task failed — $firstLine"
+                "Task failed: $firstLine"
             } else {
-                "Task failed — execution error"
+                "Task failed: execution error"
             }
             ClassifiedRuntimeError(
                 title = cleanTitle,
@@ -1376,7 +1376,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val prefix = "\$ ${progress.message}"
         val bytes = progress.totalBytes?.let { total ->
             val downloaded = progress.downloadedBytes ?: 0L
-            " — %.1f / %.1f MB".format(downloaded / 1_048_576.0, total / 1_048_576.0)
+            " (%.1f / %.1f MB)".format(downloaded / 1_048_576.0, total / 1_048_576.0)
         }.orEmpty()
         val nextLine = prefix + bytes
         val updated = if (existing.lastOrNull()?.startsWith(prefix) == true) {
@@ -3078,7 +3078,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                             val buf = ByteArray(512_000)
                             val read = stream.read(buf)
                             String(buf, 0, read)
-                        } + "\n\n[File truncated — too large to display fully]"
+                        } + "\n\n[File truncated: too large to display fully]"
                     } else {
                         file.readText()
                     }
@@ -3299,7 +3299,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             return
         }
         if (_state.value.agentKind == AgentKind.DEEPSEEK_CODER && _state.value.provider.kind == ProviderKind.CLAUDE) {
-            _state.update { it.copy(toastMessage = "Claude subscription login is not supported by DeepSeek Coder — pick a key-based provider in Settings.") }
+            _state.update { it.copy(toastMessage = "Claude subscription login is not supported by DeepSeek Coder. Pick a key-based provider in Settings.") }
             return
         }
         val attachments = state.value.pendingAttachments
@@ -3753,7 +3753,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     val finishedAt = System.currentTimeMillis()
                     val isUserStop = isUserStopping || event.reason.contains("Stopped by user", ignoreCase = true)
                     val classified = classifyRuntimeFailure(event.reason)
-                    val failureTitle = if (isUserStop) "Task stopped — user cancelled the task" else classified.title
+                    val failureTitle = if (isUserStop) "Task stopped: user cancelled the task" else classified.title
                     val finished = finishWorkSegment(current, finishedAt)
                     val attached = attachTaskDuration(finished, finishedAt)
                     val updatedMessages = attached.messages.toMutableList()

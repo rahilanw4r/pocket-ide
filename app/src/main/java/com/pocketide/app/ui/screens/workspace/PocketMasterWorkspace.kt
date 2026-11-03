@@ -352,7 +352,7 @@ fun PocketMasterWorkspace(
                             )
                         }
                         DropdownMenuItem(
-                            text = { Text("Command Center (⌘)") },
+                            text = { Text("Command Center") },
                             leadingIcon = { Icon(Icons.Default.Terminal, contentDescription = null, modifier = Modifier.size(16.dp)) },
                             onClick = {
                                 workspaceMenuOpen = false

@@ -15,7 +15,9 @@
   <a href="https://t.me/PocketIDE">Telegram Channel</a> ·
   <a href="https://t.me/PocketIDECommunity">Discussion Group</a> ·
   <a href="https://github.com/rahilanw4r/pocket-ide/issues">Issues</a> ·
-  <a href="PRIVACY.md">Privacy</a>
+  <a href="PRIVACY.md">Privacy Policy</a> ·
+  <a href="TERMS.md">Terms and Conditions</a> ·
+  <a href="https://pocketide.dev">Website</a>
 </p>
 
 <p align="center">

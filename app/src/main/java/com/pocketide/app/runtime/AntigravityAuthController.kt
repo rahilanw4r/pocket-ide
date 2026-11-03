@@ -150,7 +150,7 @@ class AntigravityAuthController(
                     loginMenuAdvanced = true
                     if (mutableState.value.status == AntigravityAuthStatus.STARTING) {
                         mutableState.value = mutableState.value.copy(
-                            message = "Google OAuth selected — waiting for the browser sign-in URL…",
+                            message = "Google OAuth selected: waiting for the browser sign-in URL...",
                         )
                     }
                 }
@@ -216,7 +216,7 @@ class AntigravityAuthController(
                     running.outputStream.flush()
                     privacyScreenCompleted = true
                     mutableState.value = mutableState.value.copy(
-                        message = "Google connected — finishing private Antigravity setup…",
+                        message = "Google connected: finishing private Antigravity setup...",
                     )
                 }
                 if (!workspaceTrustCompleted &&

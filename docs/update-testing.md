@@ -12,7 +12,7 @@ tunnel. Nothing has to be uploaded to GitHub.
 - A phone with an older debug APK installed.
 - `cloudflared` *or* `ngrok` installed locally for the HTTPS tunnel.
 - The same debug signing key Android Studio uses (the default Android
-  debug keystore is fine — the OTA verifier compares the installed key
+  debug keystore is fine - the OTA verifier compares the installed key
   against the downloaded APK's signer).
 
 ## 1. Build a newer APK
@@ -38,7 +38,7 @@ The final two arguments are optional and default to `4` and
 
 ## 2. Point the debug app at the manifest
 
-On the Moto, open **Settings → Update channel** (debug builds only —
+On the Moto, open **Settings → Update channel** (debug builds only -
 hidden in release builds).
 
 Paste:
@@ -61,7 +61,7 @@ Trigger the update from the dashboard. The full production path runs:
 4. Package name + versionCode + signing certificate verification against
    the installed app.
 5. Hand-off to Android's installer. The system still shows its final
-   confirmation screen — that's expected and not part of the app.
+   confirmation screen - that's expected and not part of the app.
 
 ## 4. Reset
 
@@ -77,7 +77,7 @@ to the default GitHub manifest URL on the next check.
 | "Update package name does not match" | The new APK was signed with a different key | Rebuild the test APK with the same debug keystore |
 | "Downloaded APK failed its SHA-256 verification" | Manifest hash stale | Rerun the script after the rebuild |
 | "Update version does not match its manifest" | APK and manifest version codes differ | Rerun the helper with a version code newer than the installed app |
-| Tunnel URL rejected | Manifest URL doesn't start with `https://` | Cloudflare/ngrok always issue HTTPS — check the full URL was pasted |
+| Tunnel URL rejected | Manifest URL doesn't start with `https://` | Cloudflare/ngrok always issue HTTPS - check the full URL was pasted |
 
 ## Re-running
 

@@ -1338,7 +1338,7 @@ private fun AgentChoiceRow(
                     Spacer(Modifier.width(7.dp))
                     Surface(
                         color = PocketIndigo.copy(alpha = 0.14f),
-                        shape = RoundedCornerShape(50),
+                        shape = RoundedCornerShape(4.dp),
                     ) {
                         Text(
                             "Recommended",
@@ -1511,7 +1511,7 @@ private fun RuntimeInstallationScreen(
                 Spacer(Modifier.weight(1f))
                 Surface(
                     color = MaterialTheme.colorScheme.surfaceVariant,
-                    shape = RoundedCornerShape(50),
+                    shape = RoundedCornerShape(6.dp),
                 ) {
                     Row(
                         modifier = Modifier.padding(horizontal = 9.dp, vertical = 4.dp),
@@ -1744,7 +1744,7 @@ private fun WorkspaceLaunchExperience(state: AppUiState) {
                 }
                 Surface(
                     color = PocketEmerald.copy(alpha = 0.12f),
-                    shape = RoundedCornerShape(50),
+                    shape = RoundedCornerShape(4.dp),
                     border = BorderStroke(1.dp, PocketEmerald.copy(alpha = 0.3f)),
                 ) {
                     Text(
@@ -2245,7 +2245,7 @@ private fun QuickTerminalSheet(
                 .coerceIn(0.40f, 0.85f)
         }
         Box(Modifier.fillMaxSize()) {
-            // Dimmed backdrop — tap to dismiss.
+            // Dimmed backdrop: tap to dismiss.
             Box(
                 Modifier
                     .fillMaxSize()
@@ -2541,7 +2541,7 @@ private fun ProviderChoiceStep(
             Spacer(Modifier.weight(1f))
             Surface(
                 color = PocketEmerald.copy(alpha = 0.10f),
-                shape = RoundedCornerShape(50),
+                shape = RoundedCornerShape(6.dp),
             ) {
                 Row(
                     modifier = Modifier.padding(horizontal = 9.dp, vertical = 4.dp),
@@ -2932,7 +2932,7 @@ private fun ProviderCredentialsStep(
                         apiKey,
                         { onApiKey(it); status = null; statusDetails = null },
                         label = { Text("API key") },
-                        placeholder = { Text(if (hasStoredSecret) "Saved securely — leave blank to keep it" else "Enter your API key") },
+                        placeholder = { Text(if (hasStoredSecret) "Saved securely: leave blank to keep it" else "Enter your API key") },
                         supportingText = {
                             if (hasStoredSecret && apiKey.isBlank()) Text("A saved key is ready to use")
                         },
@@ -3088,7 +3088,7 @@ private fun ClaudeSubscriptionCredentialsStep(
                         value = token,
                         onValueChange = onToken,
                         label = { Text("Claude setup token") },
-                        placeholder = { Text(if (hasStoredToken) "Saved securely — leave blank to keep it" else "Paste token") },
+                        placeholder = { Text(if (hasStoredToken) "Saved securely: leave blank to keep it" else "Paste token") },
                         supportingText = if (hasStoredToken && token.isBlank()) ({ Text("A saved subscription token is ready to use") }) else null,
                         singleLine = true,
                         visualTransformation = if (tokenVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -3671,7 +3671,7 @@ private fun ApiStatusChip(state: AppUiState, onSettings: () -> Unit, onPing: () 
     }
 
     Surface(
-        shape = RoundedCornerShape(50),
+        shape = RoundedCornerShape(6.dp),
         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f),
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
     ) {

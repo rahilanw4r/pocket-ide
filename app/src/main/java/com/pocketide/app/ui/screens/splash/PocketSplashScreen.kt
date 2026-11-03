@@ -70,26 +70,6 @@ fun PocketSplashScreen(
     var bootStep by remember { mutableStateOf("Initializing Core Engine...") }
 
     val infiniteTransition = rememberInfiniteTransition(label = "pulse")
-    val glowScale by infiniteTransition.animateFloat(
-        initialValue = 0.94f,
-        targetValue = 1.10f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1500, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "glowScale"
-    )
-
-    val glowAlpha by infiniteTransition.animateFloat(
-        initialValue = 0.28f,
-        targetValue = 0.55f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1500, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "glowAlpha"
-    )
-
     val dotPulse by infiniteTransition.animateFloat(
         initialValue = 0.4f,
         targetValue = 1f,
@@ -131,50 +111,24 @@ fun PocketSplashScreen(
             .background(PocketObsidian),
         contentAlignment = Alignment.Center
     ) {
-        // Multi-Layer Ambient Background Glow
-        Box(
-            modifier = Modifier
-                .size(320.dp)
-                .scale(glowScale)
-                .clip(CircleShape)
-                .background(
-                    Brush.radialGradient(
-                        listOf(
-                            PocketIndigo.copy(alpha = glowAlpha * 0.40f),
-                            PocketCyan.copy(alpha = glowAlpha * 0.25f),
-                            PocketPurple.copy(alpha = glowAlpha * 0.12f),
-                            Color.Transparent
-                        )
-                    )
-                )
-        )
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.padding(32.dp)
         ) {
-            // Elegant Squircle Logo Card
+            // Minimal Squircle Logo Card
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .size(116.dp)
+                    .size(112.dp)
                     .scale(scale.value)
-                    .clip(RoundedCornerShape(28.dp))
-                    .background(
-                        Brush.linearGradient(
-                            listOf(
-                                Color(0xFF161F33),
-                                Color(0xFF0C1019)
-                            )
-                        )
-                    )
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(PocketSurface)
                     .border(
-                        width = 1.5.dp,
-                        brush = Brush.linearGradient(
-                            listOf(PocketIndigo, PocketCyan, PocketEmerald)
-                        ),
-                        shape = RoundedCornerShape(28.dp)
+                        width = 1.dp,
+                        color = PocketBorder,
+                        shape = RoundedCornerShape(20.dp)
                     )
             ) {
                 // Official High-Resolution App Logo
@@ -183,8 +137,8 @@ fun PocketSplashScreen(
                     contentDescription = "Pocket IDE Logo",
                     contentScale = ContentScale.Fit,
                     modifier = Modifier
-                        .size(88.dp)
-                        .clip(RoundedCornerShape(20.dp))
+                        .size(80.dp)
+                        .clip(RoundedCornerShape(16.dp))
                 )
             }
 
@@ -199,17 +153,17 @@ fun PocketSplashScreen(
                 Text(
                     text = "POCKET",
                     color = PocketTextPrimary,
-                    fontSize = 28.sp,
+                    fontSize = 26.sp,
                     fontWeight = FontWeight.Black,
-                    letterSpacing = 4.sp,
+                    letterSpacing = 3.sp,
                     fontFamily = FontFamily.Monospace
                 )
                 Text(
                     text = "IDE",
-                    color = PocketCyan,
-                    fontSize = 28.sp,
+                    color = PocketPrimaryBlue,
+                    fontSize = 26.sp,
                     fontWeight = FontWeight.Black,
-                    letterSpacing = 4.sp,
+                    letterSpacing = 3.sp,
                     fontFamily = FontFamily.Monospace
                 )
             }
@@ -217,7 +171,7 @@ fun PocketSplashScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Your AI-powered development workspace, anywhere.",
+                text = "Development environment for Android",
                 color = PocketTextSecondary,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
@@ -231,20 +185,16 @@ fun PocketSplashScreen(
             // Sleek Progress Bar
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.66f)
-                    .height(4.dp)
+                    .fillMaxWidth(0.60f)
+                    .height(3.dp)
                     .clip(RoundedCornerShape(2.dp))
-                    .background(Color(0xFF141C2E))
+                    .background(PocketBorder)
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(progress.value)
-                        .height(4.dp)
-                        .background(
-                            Brush.horizontalGradient(
-                                listOf(PocketIndigo, PocketCyan, PocketEmerald)
-                            )
-                        )
+                        .height(3.dp)
+                        .background(PocketPrimaryBlue)
                 )
             }
 
@@ -296,7 +246,7 @@ fun PocketSplashScreen(
             }
 
             Text(
-                text = "ARM64 Autonomous Workspace",
+                text = "ARM64 Linux Environment",
                 color = PocketTextMuted,
                 fontSize = 10.5.sp,
                 fontWeight = FontWeight.Medium

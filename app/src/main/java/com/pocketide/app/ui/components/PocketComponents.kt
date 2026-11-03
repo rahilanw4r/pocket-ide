@@ -265,7 +265,7 @@ fun DeveloperKeyToolbar(
 
 /**
  * Compact Thinking & Reasoning Chain Block.
- * Collapses by default once finished into a subtle "✓ Planned approach",
+ * Collapses by default once finished into a subtle "Planned approach",
  * without polluting the screen with raw reasoning text unless explicitly tapped.
  */
 @Composable
@@ -560,7 +560,7 @@ private fun formatActivityLabel(item: ActivityItem): String {
 
 /**
  * Compact Tool Execution Card.
- * Uses a subtle ✓ indicator instead of large green "DONE" pills.
+ * Uses a subtle indicator instead of large green "DONE" pills.
  */
 @Composable
 fun ToolExecutionCard(

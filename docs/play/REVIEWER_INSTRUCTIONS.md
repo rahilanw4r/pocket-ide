@@ -12,7 +12,7 @@
 1. Open Pocket IDE.
 2. Review the compatibility screen.
 3. Notification permission is requested only after tapping the notification permission button. It may be denied; foreground progress remains visible inside the app.
-4. Choose core tools and tap Install. First setup normally takes 10–12 minutes.
+4. Choose core tools and tap Install. First setup normally takes 10-12 minutes.
 5. The setup screen and ongoing notification show the same live installation session. Setup can be stopped and resumed safely.
 
 ## Provider access

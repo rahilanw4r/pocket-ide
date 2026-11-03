@@ -277,7 +277,7 @@ enum class DevStack(
     ),
     PHP(
         "PHP",
-        "Websites and apps with PHP — classic sites and Laravel projects.",
+        "Websites and apps with PHP: classic sites and Laravel projects.",
         "php-cli, common extensions, and Composer",
     ),
 }

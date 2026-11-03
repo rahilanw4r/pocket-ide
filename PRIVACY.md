@@ -24,7 +24,7 @@ Pocket IDE does not currently include advertising or analytics SDKs and does not
 
 When you use an AI feature, the content required to answer your request may be transmitted to the provider you configured. Depending on the task, that content can include prompts, conversation context, relevant source code, file paths, file contents, tool results, and attachments. The provider processes that information under its own privacy policy and terms.
 
-During runtime setup and maintenance, the app connects to software distribution services—including Ubuntu, Anthropic, Node.js, Composer, App Dev For All's Android development assets, and configured Linux package repositories—to download required components. Those services may receive standard network information such as your IP address, request time, requested file, and user-agent information.
+During runtime setup and maintenance, the app connects to software distribution services, including Ubuntu, Anthropic, Node.js, Composer, App Dev For All's Android development assets, and configured Linux package repositories, to download required components. Those services may receive standard network information such as your IP address, request time, requested file, and user-agent information.
 
 Pocket IDE does not sell personal information. It does not send projects or conversations to the Pocket IDE developer unless you explicitly share them, submit diagnostics, or use a future opt-in backup or support feature.
 

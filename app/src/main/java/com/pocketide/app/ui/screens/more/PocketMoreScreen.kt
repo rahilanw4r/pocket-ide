@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
@@ -84,6 +85,7 @@ fun PocketMoreScreen(
     val context = LocalContext.current
     var showRuntimeDialog by remember { mutableStateOf(false) }
     var showPrivacyDialog by remember { mutableStateOf(false) }
+    var showTermsDialog by remember { mutableStateOf(false) }
     var showExtensionsDialog by remember { mutableStateOf(false) }
     var showMcpDialog by remember { mutableStateOf(false) }
 
@@ -120,7 +122,12 @@ fun PocketMoreScreen(
                         .clickable(onClick = onOpenCommandCenter),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("⌘", color = PocketTextPrimary, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                    Icon(
+                        Icons.Default.Terminal,
+                        contentDescription = "Command Center",
+                        tint = PocketTextPrimary,
+                        modifier = Modifier.size(16.dp)
+                    )
                 }
             }
         }
@@ -223,6 +230,13 @@ fun PocketMoreScreen(
                     value = "Local-first",
                     onClick = { showPrivacyDialog = true }
                 )
+                HorizontalDivider(color = PocketBorder)
+                MoreSettingRow(
+                    icon = Icons.Default.Description,
+                    title = "Terms & Conditions",
+                    value = "MIT License",
+                    onClick = { showTermsDialog = true }
+                )
             }
         }
 
@@ -292,6 +306,13 @@ fun PocketMoreScreen(
                 )
                 HorizontalDivider(color = PocketBorder)
                 MoreSettingRow(
+                    icon = Icons.Default.Description,
+                    title = "Terms & Conditions",
+                    value = null,
+                    onClick = { showTermsDialog = true }
+                )
+                HorizontalDivider(color = PocketBorder)
+                MoreSettingRow(
                     icon = Icons.Default.Code,
                     title = "Open Source Repository",
                     value = "GitHub",
@@ -342,16 +363,17 @@ fun PocketMoreScreen(
         )
     }
 
-    // AI Privacy Dialog
+    // Privacy Dialog
     if (showPrivacyDialog) {
         AlertDialog(
             onDismissRequest = { showPrivacyDialog = false },
-            title = { Text("Privacy & Security", color = PocketTextPrimary, fontWeight = FontWeight.Bold) },
+            title = { Text("Privacy Policy", color = PocketTextPrimary, fontWeight = FontWeight.Bold) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("• All development code executes directly inside your on-device Linux environment.", color = PocketTextSecondary, fontSize = 13.sp)
                     Text("• API keys and provider tokens are stored in Android Keystore with AES-GCM encryption.", color = PocketTextSecondary, fontSize = 13.sp)
                     Text("• No project telemetry or source code is uploaded to external telemetry services.", color = PocketTextSecondary, fontSize = 13.sp)
+                    Text("• Pocket IDE operates without tracking or advertising SDKs.", color = PocketTextSecondary, fontSize = 13.sp)
                 }
             },
             confirmButton = {
@@ -359,8 +381,51 @@ fun PocketMoreScreen(
                     Text("Done", color = PocketPrimaryBlue)
                 }
             },
+            dismissButton = {
+                TextButton(onClick = {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.PRIVACY_POLICY_URL))
+                        context.startActivity(intent)
+                    } catch (_: Exception) {}
+                }) {
+                    Text("Read Full Policy", color = PocketTextSecondary)
+                }
+            },
             containerColor = PocketSurface,
-            shape = RoundedCornerShape(10.dp)
+            shape = RoundedCornerShape(8.dp)
+        )
+    }
+
+    // Terms and Conditions Dialog
+    if (showTermsDialog) {
+        AlertDialog(
+            onDismissRequest = { showTermsDialog = false },
+            title = { Text("Terms & Conditions", color = PocketTextPrimary, fontWeight = FontWeight.Bold) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("• Pocket IDE is open source software licensed under the MIT License.", color = PocketTextSecondary, fontSize = 13.sp)
+                    Text("• You retain 100% full ownership of all code, files, and assets you create.", color = PocketTextSecondary, fontSize = 13.sp)
+                    Text("• All commands run inside your local device sandbox. You are responsible for commands executed.", color = PocketTextSecondary, fontSize = 13.sp)
+                    Text("• Third-party AI services are governed by their respective API terms and pricing.", color = PocketTextSecondary, fontSize = 13.sp)
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showTermsDialog = false }) {
+                    Text("Done", color = PocketPrimaryBlue)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.TERMS_URL))
+                        context.startActivity(intent)
+                    } catch (_: Exception) {}
+                }) {
+                    Text("Read Full Terms", color = PocketTextSecondary)
+                }
+            },
+            containerColor = PocketSurface,
+            shape = RoundedCornerShape(8.dp)
         )
     }
 

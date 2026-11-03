@@ -214,7 +214,7 @@ private fun LegacySettingsScreen(
                 ) {
                     Column(Modifier.fillMaxWidth().padding(14.dp)) {
                         Text(
-                            "Node.js, npm, and Git are always installed — Claude Code runs on them.",
+                            "Node.js, npm, and Git are always installed: Claude Code runs on them.",
                             fontSize = 12.sp,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -757,7 +757,7 @@ private fun LegacySettingsScreen(
                             Text("v${BuildConfig.VERSION_NAME}", color = PocketEmerald, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
                         }
                         Text(
-                            "Your AI-powered development workspace, anywhere.",
+                            "Development environment for Android.",
                             fontSize = 12.5.sp,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             lineHeight = 18.sp,

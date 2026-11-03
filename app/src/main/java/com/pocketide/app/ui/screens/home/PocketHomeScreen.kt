@@ -110,11 +110,11 @@ fun PocketHomeScreen(
     }
 
     val quickTemplates = listOf(
-        "⚡ React + Vite" to "Create a modern React web app with Vite and Tailwind CSS",
-        "🐍 Python Script" to "Build a Python utility script with CLI arguments and clean structure",
-        "📱 Android UI" to "Create a Jetpack Compose Android UI screen with Material 3",
-        "⚙️ REST API" to "Build a lightweight Express.js REST API with health and data routes",
-        "🧪 Clean Scratchpad" to "Start a blank project with an index.html and script.js"
+        "React + Vite" to "Create a modern React web app with Vite and Tailwind CSS",
+        "Python Script" to "Build a Python utility script with CLI arguments and clean structure",
+        "Android UI" to "Create a Jetpack Compose Android UI screen with Material 3",
+        "REST API" to "Build a lightweight Express.js REST API with health and data routes",
+        "Scratchpad" to "Start a blank project with an index.html and script.js"
     )
 
     LazyColumn(
@@ -757,7 +757,7 @@ fun PocketHomeScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "📢 Channel",
+                                    text = "Telegram Channel",
                                     color = PocketTextPrimary,
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.SemiBold
@@ -783,7 +783,7 @@ fun PocketHomeScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "💬 Discussion",
+                                    text = "Community Discussion",
                                     color = PocketTextPrimary,
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.SemiBold

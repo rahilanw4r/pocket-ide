@@ -73,7 +73,7 @@ object RuntimeSetupController {
     @Synchronized
     fun begin(context: Context) {
         val previous = mutableSnapshot.value.logs
-        val logs = (previous + "— Resuming Pocket IDE setup —").takeLast(MAX_LOG_LINES)
+        val logs = (previous + "-- Resuming Pocket IDE setup --").takeLast(MAX_LOG_LINES)
         set(context, RuntimeSetupSnapshot(status = RuntimeSetupStatus.RUNNING, progress = 0.01f, logs = logs))
     }
 
@@ -132,7 +132,7 @@ object RuntimeSetupController {
                 indeterminate = false,
                 downloadedBytes = null,
                 totalBytes = null,
-                logs = (current.logs + "✓ Setup completed successfully").takeLast(MAX_LOG_LINES),
+                logs = (current.logs + "[OK] Setup completed successfully").takeLast(MAX_LOG_LINES),
             ),
         )
     }
@@ -175,7 +175,7 @@ object RuntimeSetupController {
                 errorMessage = friendly,
                 offline = offline,
                 indeterminate = false,
-                logs = (current.logs + "✕ $friendly").takeLast(MAX_LOG_LINES),
+                logs = (current.logs + "[ERROR] $friendly").takeLast(MAX_LOG_LINES),
             ),
         )
     }

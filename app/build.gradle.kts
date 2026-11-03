@@ -15,6 +15,8 @@ val playBuild = providers.gradleProperty("playBuild").orNull?.toBoolean() == tru
     providers.gradleProperty("playFeasibility").orNull?.toBoolean() == true
 val privacyPolicyUrl = providers.gradleProperty("privacyPolicyUrl").orNull
     ?: "https://github.com/rahilanw4r/pocket-ide/blob/main/PRIVACY.md"
+val termsUrl = providers.gradleProperty("termsUrl").orNull
+    ?: "https://github.com/rahilanw4r/pocket-ide/blob/main/TERMS.md"
 val uploadStorePath = providers.environmentVariable("MH_UPLOAD_STORE_FILE").orNull
 val uploadStorePassword = providers.environmentVariable("MH_UPLOAD_STORE_PASSWORD").orNull
 val uploadKeyAlias = providers.environmentVariable("MH_UPLOAD_KEY_ALIAS").orNull
@@ -94,6 +96,7 @@ android {
 
         buildConfigField("boolean", "IS_PLAY_BUILD", playBuild.toString())
         buildConfigField("String", "PRIVACY_POLICY_URL", buildConfigString(privacyPolicyUrl))
+        buildConfigField("String", "TERMS_URL", buildConfigString(termsUrl))
 
         buildConfigField(
             "String",

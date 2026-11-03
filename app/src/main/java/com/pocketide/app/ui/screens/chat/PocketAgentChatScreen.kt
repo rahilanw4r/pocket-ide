@@ -145,11 +145,11 @@ fun PocketAgentChatScreen(
     val isKeyboardVisible = WindowInsets.ime.getBottom(density) > 0
 
     val quickPrompts = listOf(
-        "⚡ Run tests and fix errors",
-        "🔍 Inspect project architecture",
-        "🚀 Start dev server",
-        "📝 Review git changes",
-        "📱 Build Android APK"
+        "Run tests and fix errors",
+        "Inspect project architecture",
+        "Start dev server",
+        "Review git changes",
+        "Build Android APK"
     )
 
     LaunchedEffect(messages.size, liveProcess.size, liveThinkingSummary, taskLifecycle) {

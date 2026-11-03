@@ -232,7 +232,12 @@ fun CommandCenterDialog(
                             .border(1.dp, PocketBorder, RoundedCornerShape(6.dp)),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("⌘", color = PocketPrimaryBlue, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        Icon(
+                            Icons.Default.Terminal,
+                            contentDescription = null,
+                            tint = PocketPrimaryBlue,
+                            modifier = Modifier.size(14.dp)
+                        )
                     }
 
                     BasicTextField(

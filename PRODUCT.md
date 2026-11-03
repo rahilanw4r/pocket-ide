@@ -1,4 +1,4 @@
-# Pocket IDE — Product Truth
+# Pocket IDE: Product Truth
 
 ## Purpose
 Pocket IDE is a mobile-first Android development environment powered by an isolated PRoot Linux userspace, integrated Git workflows, code editor, terminal, in-app web preview, and integrated AI coding agents (Google Antigravity agy, Claude Code, and custom API providers). It turns ARM64 Android devices into serious, self-contained development machines.

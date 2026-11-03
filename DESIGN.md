@@ -1,4 +1,4 @@
-# Pocket IDE — Design System
+# Pocket IDE: Design System
 
 ## 1. Principles
 - **Clarity over Decoration**: No floating glowing clouds, artificial glassmorphic blurs, or nested rounded cards.

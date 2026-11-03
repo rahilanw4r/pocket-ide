@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Pocket IDE</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="favicon.ico">
+  <style>
+    :root {
+      --bg: #141414;
+      --surface: #1C1C1C;
+      --border: #2C2C2C;
+      --text-primary: #F0F0F0;
+      --text-secondary: #A0A0A0;
+      --accent: #3B82F6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      padding: 32px 20px;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .date {
+      color: var(--text-secondary);
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+    section {
+      margin-bottom: 28px;
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+    p, ul {
+      color: var(--text-secondary);
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="index.html" class="brand">Pocket IDE</a>
+      <h1>Privacy Policy</h1>
+      <p class="date">Effective date: November 4, 2026</p>
+    </header>
+
+    <section>
+      <h2>Overview</h2>
+      <p>Pocket IDE is a local-first Android development environment. All coding workspaces, Linux runtimes, terminal sessions, and project files reside locally on your device storage. This policy outlines what information the application handles, where it is stored, and when network communication occurs.</p>
+    </section>
+
+    <section>
+      <h2>Information Handled Locally</h2>
+      <p>Pocket IDE manages the following data locally within Android protected application sandbox:</p>
+      <ul>
+        <li>Project source code, scripts, assets, and git repositories.</li>
+        <li>Third-party AI provider API keys, encrypted at rest using the hardware-backed Android Keystore.</li>
+        <li>Terminal command histories, log streams, and compilation artifacts.</li>
+        <li>Local web preview cache on loopback localhost interfaces.</li>
+      </ul>
+      <p>Pocket IDE does not bundle advertising SDKs, tracking frameworks, or third-party behavioral analytics.</p>
+    </section>
+
+    <section>
+      <h2>External Network Activity</h2>
+      <p>Network activity is strictly limited to user-directed operations:</p>
+      <ul>
+        <li><strong>Runtime Components:</strong> When installing development stacks (Node.js, Python, Git, PRoot), packages are downloaded over HTTPS from official distribution mirrors.</li>
+        <li><strong>User-Configured AI Services:</strong> When you invoke code assistance using your own API key, requests containing the relevant context are transmitted directly to the configured provider API (e.g., Anthropic, Google, OpenAI, DeepSeek). That communication is governed by the respective provider privacy policy.</li>
+        <li><strong>Application Updates:</strong> Optional release checks contact the official GitHub Releases endpoint.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Data Retention and Control</h2>
+      <p>You have complete control over all data. Deleting a project removes its workspace files from your device. Uninstalling Pocket IDE removes all private data and Keystore credentials according to standard Android platform behavior.</p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>For questions or verification requests, contact us via <a href="https://github.com/rahilanw4r/pocket-ide/issues" target="_blank" rel="noopener">GitHub Issues</a> or our <a href="https://t.me/PocketIDE" target="_blank" rel="noopener">Telegram Channel</a>.</p>
+    </section>
+
+    <footer>
+      <div>&copy; 2026 Pocket IDE</div>
+      <div>
+        <a href="terms.html">Terms and Conditions</a> &middot;
+        <a href="https://github.com/rahilanw4r/pocket-ide" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

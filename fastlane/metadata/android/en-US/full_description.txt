@@ -1,6 +1,6 @@
 Pocket IDE is a local-first AI development workspace built for ARM64 Android phones.
 
-Create persistent projects or start a Quick Project, chat with a coding agent, inspect files, run Linux commands, review changes, and preview local web apps—without installing Termux or rooting your phone.
+Create persistent projects or start a Quick Project, chat with a coding agent, inspect files, run Linux commands, review changes, and preview local web apps without installing Termux or rooting your phone.
 
 Features:
 • Persistent projects and friendly, instantly created Quick Projects

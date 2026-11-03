@@ -43,6 +43,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -207,7 +208,12 @@ fun PocketProjectsScreen(
                             .clickable(onClick = onOpenCommandCenter),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("⌘", color = PocketTextPrimary, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        Icon(
+                            Icons.Default.Terminal,
+                            contentDescription = "Command Center",
+                            tint = PocketTextPrimary,
+                            modifier = Modifier.size(16.dp)
+                        )
                     }
 
                     // + New Project button

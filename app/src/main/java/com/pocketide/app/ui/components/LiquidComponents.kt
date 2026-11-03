@@ -84,51 +84,16 @@ import com.pocketide.app.ui.theme.PocketTextPrimary
 import com.pocketide.app.ui.theme.PocketTextSecondary
 
 /**
- * Apple-style Liquid Chromatic Aura Border.
- * Renders a continuously rotating fluid chromatic light wave around a shape.
+ * Clean developer border modifier.
  */
 @Composable
 fun Modifier.liquidAuraBorder(
     enabled: Boolean = true,
-    shape: Shape = RoundedCornerShape(16.dp),
-    strokeWidth: Dp = 2.dp,
-    intensity: Float = 0.85f,
+    shape: Shape = RoundedCornerShape(8.dp),
+    strokeWidth: Dp = 1.dp,
+    intensity: Float = 1.0f,
 ): Modifier {
-    if (!enabled) return this.border(1.dp, PocketBorder, shape)
-
-    val infiniteTransition = rememberInfiniteTransition(label = "LiquidAuraTransition")
-    val rotation by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 5000, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "LiquidRotation"
-    )
-
-    val auraColors = listOf(
-        PocketEmerald.copy(alpha = 0.9f * intensity),
-        PocketCyan.copy(alpha = 0.85f * intensity),
-        PocketIndigo.copy(alpha = 0.9f * intensity),
-        PocketPurple.copy(alpha = 0.7f * intensity),
-        PocketEmerald.copy(alpha = 0.9f * intensity),
-    )
-
-    return this
-        .clip(shape)
-        .drawWithContent {
-            drawContent()
-            rotate(rotation) {
-                drawCircle(
-                    brush = Brush.sweepGradient(auraColors),
-                    radius = size.maxDimension,
-                    style = Stroke(width = strokeWidth.toPx()),
-                    blendMode = BlendMode.SrcOver
-                )
-            }
-        }
-        .border(1.dp, PocketBorder.copy(alpha = 0.6f), shape)
+    return this.border(strokeWidth, PocketBorder, shape)
 }
 
 /**
@@ -224,9 +189,9 @@ fun LiquidAiAssistantBar(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(8.dp))
             .background(PocketSurfaceVariant)
-            .border(1.dp, if (isThinking) PocketEmerald else PocketBorder, RoundedCornerShape(16.dp))
+            .border(1.dp, if (isThinking) PocketEmerald else PocketBorder, RoundedCornerShape(8.dp))
             .padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -245,7 +210,7 @@ fun LiquidAiAssistantBar(
                 Box(
                     modifier = Modifier
                         .size(26.dp)
-                        .clip(CircleShape)
+                        .clip(RoundedCornerShape(6.dp))
                         .background(if (isThinking) PocketEmerald.copy(alpha = 0.25f) else PocketIndigo.copy(alpha = 0.2f)),
                     contentAlignment = Alignment.Center
                 ) {
@@ -258,7 +223,7 @@ fun LiquidAiAssistantBar(
                 }
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = if (isThinking) "Liquid AI · Processing…" else "Liquid AI Assistant",
+                        text = if (isThinking) "Agent: Processing..." else "Quick Actions",
                         color = PocketTextPrimary,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -266,7 +231,7 @@ fun LiquidAiAssistantBar(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = if (isThinking) "Generating solution on ARM64 runtime" else "Tap a quick action to trigger copilot",
+                        text = if (isThinking) "Executing command on ARM64 runtime" else "Shortcuts for testing, review, and optimization",
                         color = PocketTextMuted,
                         fontSize = 11.sp,
                         maxLines = 1,
@@ -317,9 +282,9 @@ fun LiquidAiAssistantBar(
                 actions.forEach { action ->
                     Box(
                         modifier = Modifier
-                            .clip(RoundedCornerShape(10.dp))
+                            .clip(RoundedCornerShape(6.dp))
                             .background(PocketSurfaceElevated)
-                            .border(1.dp, PocketBorder, RoundedCornerShape(10.dp))
+                            .border(1.dp, PocketBorder, RoundedCornerShape(6.dp))
                             .liquidBounceClick(onClick = {
                                 onTriggerAction(action.prompt)
                             })

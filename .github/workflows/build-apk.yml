@@ -77,8 +77,8 @@ jobs:
           EOF
 
           gh release create "$TAG" "$APK_NAME" \
-            --title "Pocket IDE $TAG — Your AI-powered development workspace, anywhere" \
+            --title "Pocket IDE $TAG: Development environment for Android" \
             --notes-file release_notes.md || (
-            gh release edit "$TAG" --title "Pocket IDE $TAG — Your AI-powered development workspace, anywhere" --notes-file release_notes.md && \
+            gh release edit "$TAG" --title "Pocket IDE $TAG: Development environment for Android" --notes-file release_notes.md && \
             gh release upload "$TAG" "$APK_NAME" --clobber
           )

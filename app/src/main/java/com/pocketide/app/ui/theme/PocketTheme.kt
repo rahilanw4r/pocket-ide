@@ -56,7 +56,7 @@ val PocketDarkPalette = PocketColorPalette(
     cyan = Color(0xFF38BDF8),             // Subtle info cyan
     amber = Color(0xFFF59E0B),            // Warning amber
     rose = Color(0xFFEF4444),             // Red ONLY for errors / destructive actions
-    purple = Color(0xFF8B5CF6),           // Accent purple
+    purple = Color(0xFF64748B),           // Muted slate accent (neutralized, no purple)
     isDark = true,
 )
 

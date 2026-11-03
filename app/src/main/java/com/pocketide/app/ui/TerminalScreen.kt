@@ -330,7 +330,7 @@ fun TerminalScreen(
                             onClick = { quickCmdMenuOpen = true },
                             label = {
                                 Text(
-                                    "⌘ Commands",
+                                    "Commands",
                                     fontFamily = FontFamily.Monospace,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
@@ -586,7 +586,7 @@ private fun TerminalKeyButton(
         ),
     ) {
         Text(
-            if (active) "$label ✓" else label,
+            if (active) "$label [on]" else label,
             fontFamily = FontFamily.Monospace,
             fontSize = 12.sp,
             maxLines = 1,
