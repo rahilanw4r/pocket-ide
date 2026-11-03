@@ -101,33 +101,49 @@ def main():
                 print(f"Warning deleting old asset: {e_del}")
 
     # Upload APK asset
-    upload_url = f"https://uploads.github.com/repos/{repo}/releases/{release_id}/assets?name={apk_name}"
+    upload_template = release.get("upload_url", "")
+    if "{" in upload_template:
+        upload_url = upload_template.split("{")[0] + f"?name={apk_name}"
+    else:
+        upload_url = f"https://uploads.github.com/repos/{repo}/releases/{release_id}/assets?name={apk_name}"
+
     upload_headers = {
         "Authorization": f"Bearer {token}",
         "Accept": "application/vnd.github+json",
         "Content-Type": "application/vnd.android.package-archive",
-        "Content-Length": str(file_size),
         "User-Agent": "Pocket-IDE-Release-Bot",
         "X-GitHub-Api-Version": "2022-11-28"
     }
 
-    print(f"Uploading {apk_name} to {upload_url}...")
+    print(f"Reading {file_size} bytes from {apk_file}...")
     with open(apk_file, "rb") as f_data:
-        upload_req = urllib.request.Request(
-            upload_url,
-            data=f_data,
-            headers=upload_headers,
-            method="POST"
-        )
-        try:
-            with urllib.request.urlopen(upload_req) as resp:
-                asset_resp = json.loads(resp.read().decode("utf-8"))
-                print(f"Upload complete! Asset ID: {asset_resp.get('id')}, URL: {asset_resp.get('browser_download_url')}")
-        except urllib.error.HTTPError as e:
-            print(f"Error uploading asset ({e.code}): {e.read().decode('utf-8', errors='ignore')}")
-            sys.exit(1)
+        raw_bytes = f_data.read()
+
+    upload_headers["Content-Length"] = str(len(raw_bytes))
+    print(f"Uploading {apk_name} ({len(raw_bytes)} bytes) to {upload_url}...")
+
+    upload_req = urllib.request.Request(
+        upload_url,
+        data=raw_bytes,
+        headers=upload_headers,
+        method="POST"
+    )
+    try:
+        with urllib.request.urlopen(upload_req) as resp:
+            asset_resp = json.loads(resp.read().decode("utf-8"))
+            print(f"Upload complete! Asset ID: {asset_resp.get('id')}, URL: {asset_resp.get('browser_download_url')}")
+    except urllib.error.HTTPError as e:
+        print(f"Error uploading asset ({e.code}): {e.read().decode('utf-8', errors='ignore')}")
+        sys.exit(1)
 
     print(f"Release {tag} published successfully!")
 
 if __name__ == "__main__":
-    main()
+    import traceback
+    try:
+        main()
+    except Exception as e:
+        print(f"Unhandled exception in publish-release.py: {e}")
+        traceback.print_exc()
+        sys.exit(1)
+

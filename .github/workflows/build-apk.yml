@@ -74,4 +74,8 @@ jobs:
           EOF
 
           export TAG
-          python3 scripts/publish-release.py
+          python3 scripts/publish-release.py 2>&1 | tee /tmp/release.log || {
+            echo "::error::Release publish failed! Log output:"
+            cat /tmp/release.log
+            exit 1
+          }
