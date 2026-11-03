@@ -69,14 +69,16 @@ jobs:
           **Minimal, Premium UI/UX Polish, Design System Alignment, and Accessibility Floor.**
 
           #### What's New:
-          - **Human-Crafted Engineering Standards**: Clean developer obsidian palette (`#141414`), crisp rectangular button radii (6dp/8dp), zero purple gradients, zero emojis, and zero em dashes.
-          - **Legal & Transparency**: Integrated Terms & Conditions (`TERMS.md`) and Privacy Policy screens directly into app settings and dedicated web documentation.
-          - **Custom Domain & Favicon**: Added official deployment assets (`site/`) with `CNAME` for `pocketide.dev`, favicon, and standalone legal pages.
+          - **Human-Crafted Engineering Standards**: Clean developer obsidian palette (\`#141414\`), crisp rectangular button radii (6dp/8dp), zero purple gradients, zero emojis, and zero em dashes.
+          - **Legal & Transparency**: Integrated Terms & Conditions (\`TERMS.md\`) and Privacy Policy screens directly into app settings and dedicated web documentation.
+          - **Custom Domain & Favicon**: Added official deployment assets (\`site/\`) with \`CNAME\` for \`pocketide.dev\`, favicon, and standalone legal pages.
           - **Minimal Splash Screen**: Clean, distraction-free startup sequence with solid obsidian background and primary blue loading indicator.
           - **Tactile Non-Bouncy Interaction**: Replaced bouncy spring physics with precise, tactile non-bouncing feedback.
           EOF
 
-          gh release delete "$TAG" --yes || true
           gh release create "$TAG" "$APK_NAME" \
             --title "Pocket IDE $TAG: Development environment for Android" \
-            --notes-file release_notes.md
+            --notes-file release_notes.md || (
+            gh release edit "$TAG" --title "Pocket IDE $TAG: Development environment for Android" --notes-file release_notes.md || true
+            gh release upload "$TAG" "$APK_NAME" --clobber
+          )
