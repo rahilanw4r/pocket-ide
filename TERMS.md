@@ -43,3 +43,4 @@ Pocket IDE allows you to optionally configure third-party AI provider credential
 If you have any questions or feedback regarding these Terms, contact us:
 - **GitHub Issues**: [github.com/rahilanw4r/pocket-ide/issues](https://github.com/rahilanw4r/pocket-ide/issues)
 - **Telegram**: [@PocketIDE](https://t.me/PocketIDE)
+
