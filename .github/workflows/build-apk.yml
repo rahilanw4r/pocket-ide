@@ -57,28 +57,21 @@ jobs:
           APK_FILE=$(ls app/build/outputs/apk/online/debug/*.apk | head -n 1)
           VERSION_NAME=$(grep 'versionName =' app/build.gradle.kts | head -n 1 | awk -F'"' '{print $2}')
           VERSION_CODE=$(grep 'versionCode =' app/build.gradle.kts | head -n 1 | awk '{print $NF}' | tr -d '\r\n')
-          TAG="v${VERSION_NAME:-1.0.24}"
+          TAG="v${VERSION_NAME:-1.0.40}"
           APK_NAME="Pocket-IDE-${TAG}.apk"
           echo "Publishing release $TAG with $APK_NAME from $APK_FILE"
           cp "$APK_FILE" "$APK_NAME"
 
-          cat << EOF > release_notes.md
-          ### Pocket IDE ${TAG}
-          <!-- versionCode: ${VERSION_CODE} -->
-
+          cat << 'EOF' > release_notes.md
           **Minimal, Premium UI/UX Polish, Design System Alignment, and Accessibility Floor.**
 
           #### What's New:
-          - **Human-Crafted Engineering Standards**: Clean developer obsidian palette (\`#141414\`), crisp rectangular button radii (6dp/8dp), zero purple gradients, zero emojis, and zero em dashes.
-          - **Legal & Transparency**: Integrated Terms & Conditions (\`TERMS.md\`) and Privacy Policy screens directly into app settings and dedicated web documentation.
-          - **Custom Domain & Favicon**: Added official deployment assets (\`site/\`) with \`CNAME\` for \`pocketide.dev\`, favicon, and standalone legal pages.
+          - **Human-Crafted Engineering Standards**: Clean developer obsidian palette (`#141414`), crisp rectangular button radii (6dp/8dp), zero purple gradients, zero emojis, and zero em dashes.
+          - **Legal & Transparency**: Integrated Terms & Conditions (`TERMS.md`) and Privacy Policy screens directly into app settings and dedicated web documentation.
+          - **Custom Domain & Favicon**: Added official deployment assets (`site/`) with `CNAME` for `pocketide.dev`, favicon, and standalone legal pages.
           - **Minimal Splash Screen**: Clean, distraction-free startup sequence with solid obsidian background and primary blue loading indicator.
           - **Tactile Non-Bouncy Interaction**: Replaced bouncy spring physics with precise, tactile non-bouncing feedback.
           EOF
 
-          gh release create "$TAG" "$APK_NAME" \
-            --title "Pocket IDE $TAG: Development environment for Android" \
-            --notes-file release_notes.md || (
-            gh release edit "$TAG" --title "Pocket IDE $TAG: Development environment for Android" --notes-file release_notes.md || true
-            gh release upload "$TAG" "$APK_NAME" --clobber
-          )
+          export TAG
+          python3 scripts/publish-release.py
