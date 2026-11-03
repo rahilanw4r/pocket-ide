@@ -20,25 +20,24 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.CallSplit
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Terminal
-import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -58,27 +57,32 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pocketide.app.R
+import com.pocketide.app.model.AgentKind
 import com.pocketide.app.model.Project
+import com.pocketide.app.model.ProjectKind
 import com.pocketide.app.ui.AppUiState
 import com.pocketide.app.ui.components.PocketPrimaryButton
 import com.pocketide.app.ui.components.PocketSecondaryButton
 import com.pocketide.app.ui.theme.PocketBorder
-import com.pocketide.app.ui.theme.PocketDarkPalette
+import com.pocketide.app.ui.theme.PocketCyan
+import com.pocketide.app.ui.theme.PocketEmerald
+import com.pocketide.app.ui.theme.PocketObsidian
 import com.pocketide.app.ui.theme.PocketPrimaryBlue
 import com.pocketide.app.ui.theme.PocketSurface
 import com.pocketide.app.ui.theme.PocketSurfaceElevated
 import com.pocketide.app.ui.theme.PocketTextMuted
 import com.pocketide.app.ui.theme.PocketTextPrimary
 import com.pocketide.app.ui.theme.PocketTextSecondary
-
 
 @Composable
 fun PocketHomeScreen(
@@ -97,23 +101,31 @@ fun PocketHomeScreen(
 ) {
     var showCreateDialog by remember { mutableStateOf(false) }
     var newProjectName by remember { mutableStateOf("") }
-    var copilotPrompt by remember { mutableStateOf("") }
-    val context = androidx.compose.ui.platform.LocalContext.current
+    var promptInput by rememberSaveable { mutableStateOf("") }
+    val context = LocalContext.current
     var showCommunityCard by rememberSaveable { mutableStateOf(true) }
 
     val recentProjects = remember(state.projects) {
         state.projects.take(4)
     }
 
+    val quickTemplates = listOf(
+        "⚡ React + Vite" to "Create a modern React web app with Vite and Tailwind CSS",
+        "🐍 Python Script" to "Build a Python utility script with CLI arguments and clean structure",
+        "📱 Android UI" to "Create a Jetpack Compose Android UI screen with Material 3",
+        "⚙️ REST API" to "Build a lightweight Express.js REST API with health and data routes",
+        "🧪 Clean Scratchpad" to "Start a blank project with an index.html and script.js"
+    )
+
     LazyColumn(
         state = listState,
         modifier = modifier
             .fillMaxSize()
-            .background(PocketDarkPalette.background),
+            .background(PocketObsidian),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // 1. Clean Action Header: Pocket IDE, Search, More
+        // 1. Top Bar: App Identity, Linux Status & Quick Header Actions
         item {
             Row(
                 modifier = Modifier
@@ -130,29 +142,75 @@ fun PocketHomeScreen(
                         painter = painterResource(id = R.drawable.app_logo),
                         contentDescription = "Pocket IDE",
                         modifier = Modifier
-                            .size(28.dp)
-                            .clip(RoundedCornerShape(6.dp))
+                            .size(30.dp)
+                            .clip(RoundedCornerShape(8.dp))
                     )
-                    Text(
-                        text = "Pocket IDE",
-                        color = PocketTextPrimary,
-                        fontSize = 17.sp,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = (-0.2).sp
-                    )
+                    Column {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Text(
+                                text = "Pocket IDE",
+                                color = PocketTextPrimary,
+                                fontSize = 17.sp,
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = (-0.2).sp
+                            )
+                            // Linux status badge
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(4.dp))
+                                    .background(PocketEmerald.copy(alpha = 0.12f))
+                                    .border(1.dp, PocketEmerald.copy(alpha = 0.3f), RoundedCornerShape(4.dp))
+                                    .padding(horizontal = 5.dp, vertical = 1.dp)
+                            ) {
+                                Text(
+                                    text = "PRoot ARM64",
+                                    color = PocketEmerald,
+                                    fontSize = 9.5.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = FontFamily.Monospace
+                                )
+                            }
+                        }
+                        Text(
+                            text = "Mobile Linux Development",
+                            color = PocketTextMuted,
+                            fontSize = 11.sp
+                        )
+                    }
                 }
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    // Search / Command Center
+                    // Quick Terminal Action
                     Box(
                         modifier = Modifier
-                            .size(34.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .size(36.dp)
+                            .clip(RoundedCornerShape(10.dp))
                             .background(PocketSurfaceElevated)
-                            .border(1.dp, PocketBorder, RoundedCornerShape(8.dp))
+                            .border(1.dp, PocketBorder, RoundedCornerShape(10.dp))
+                            .clickable(onClick = onOpenTerminal),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Terminal,
+                            contentDescription = "Terminal",
+                            tint = PocketTextSecondary,
+                            modifier = Modifier.size(17.dp)
+                        )
+                    }
+
+                    // Command Center Search
+                    Box(
+                        modifier = Modifier
+                            .size(36.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(PocketSurfaceElevated)
+                            .border(1.dp, PocketBorder, RoundedCornerShape(10.dp))
                             .clickable(onClick = onOpenCommandCenter),
                         contentAlignment = Alignment.Center
                     ) {
@@ -164,19 +222,19 @@ fun PocketHomeScreen(
                         )
                     }
 
-                    // More
+                    // More / Settings
                     Box(
                         modifier = Modifier
-                            .size(34.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .size(36.dp)
+                            .clip(RoundedCornerShape(10.dp))
                             .background(PocketSurfaceElevated)
-                            .border(1.dp, PocketBorder, RoundedCornerShape(8.dp))
+                            .border(1.dp, PocketBorder, RoundedCornerShape(10.dp))
                             .clickable(onClick = onOpenMore),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Default.MoreVert,
-                            contentDescription = "More",
+                            contentDescription = "Settings",
                             tint = PocketTextSecondary,
                             modifier = Modifier.size(18.dp)
                         )
@@ -185,63 +243,20 @@ fun PocketHomeScreen(
             }
         }
 
-        // 2. Hero Headline & Description (Developer-focused, ChatGPT aesthetic)
+        // 2. Active AI Agent & Model Status Pill
         item {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp, bottom = 4.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                Text(
-                    text = "Build from your phone",
-                    color = PocketTextPrimary,
-                    fontSize = 26.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = (-0.5).sp
-                )
-                Text(
-                    text = "Chat with AI agents, edit code, run terminal commands, and preview your apps on the go.",
-                    color = PocketTextSecondary,
-                    fontSize = 13.5.sp,
-                    lineHeight = 19.sp
-                )
+            val agentTitle = state.agentKind.title
+            val modelName = if (state.agentKind == AgentKind.ANTIGRAVITY) {
+                if (state.antigravityModel.isNotBlank()) state.antigravityModel else "Gemini 3.8 Flash"
+            } else {
+                if (state.provider.model.isNotBlank()) state.provider.model else state.provider.kind.title
             }
-        }
 
-        // 3. Main Action Buttons: + New Project & Quick Project
-        item {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                PocketPrimaryButton(
-                    text = "New Project",
-                    icon = Icons.Default.Add,
-                    onClick = {
-                        newProjectName = ""
-                        showCreateDialog = true
-                    },
-                    modifier = Modifier.weight(1f),
-                    height = 44.dp
-                )
-                PocketSecondaryButton(
-                    text = "Open Project",
-                    icon = Icons.Default.FolderOpen,
-                    onClick = onViewAllProjects,
-                    modifier = Modifier.weight(1f),
-                    height = 44.dp
-                )
-            }
-        }
-
-        // 4. Import / Existing Project Helper Card
-        item {
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp))
-                    .clickable(onClick = onViewAllProjects),
+                    .clickable(onClick = onOpenMore),
                 shape = RoundedCornerShape(12.dp),
                 color = PocketSurface,
                 border = androidx.compose.foundation.BorderStroke(1.dp, PocketBorder)
@@ -249,35 +264,236 @@ fun PocketHomeScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 14.dp, vertical = 13.dp),
+                        .padding(horizontal = 14.dp, vertical = 10.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        Text(
-                            text = "Bring an existing project",
-                            color = PocketTextPrimary,
-                            fontSize = 13.5.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            text = "Import ZIP, Git repository, or clone workspace",
-                            color = PocketTextSecondary,
-                            fontSize = 11.5.sp
-                        )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clip(CircleShape)
+                                .background(PocketPrimaryBlue.copy(alpha = 0.15f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.AutoAwesome,
+                                contentDescription = null,
+                                tint = PocketPrimaryBlue,
+                                modifier = Modifier.size(13.dp)
+                            )
+                        }
+                        Column {
+                            Text(
+                                text = "Active Coding Engine",
+                                color = PocketTextMuted,
+                                fontSize = 10.5.sp,
+                                fontWeight = FontWeight.Medium
+                            )
+                            Text(
+                                text = "$agentTitle · $modelName",
+                                color = PocketTextPrimary,
+                                fontSize = 12.5.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
                     }
 
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = "Import",
+                        contentDescription = "Configure",
                         tint = PocketTextMuted,
-                        modifier = Modifier.size(18.dp)
+                        modifier = Modifier.size(16.dp)
                     )
                 }
             }
         }
 
-        // 5. Recent Projects
+        // 3. Fast Launcher: "What do you want to build?"
+        item {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                color = PocketSurface,
+                border = androidx.compose.foundation.BorderStroke(1.dp, PocketBorder)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(14.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Text(
+                        text = "What do you want to build?",
+                        color = PocketTextPrimary,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = (-0.3).sp
+                    )
+
+                    // Prompt Input Field with inline Send button
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        color = PocketSurfaceElevated,
+                        border = androidx.compose.foundation.BorderStroke(1.dp, PocketBorder)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            BasicTextField(
+                                value = promptInput,
+                                onValueChange = { promptInput = it },
+                                modifier = Modifier.weight(1f),
+                                textStyle = TextStyle(
+                                    color = PocketTextPrimary,
+                                    fontSize = 13.5.sp,
+                                    lineHeight = 18.sp
+                                ),
+                                cursorBrush = SolidColor(PocketPrimaryBlue),
+                                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+                                keyboardActions = KeyboardActions(
+                                    onSend = {
+                                        val text = promptInput.trim()
+                                        if (text.isNotBlank()) {
+                                            promptInput = ""
+                                            onAskCopilot(text)
+                                        }
+                                    }
+                                ),
+                                decorationBox = { inner ->
+                                    if (promptInput.isEmpty()) {
+                                        Text(
+                                            text = "Describe an app, script, or question…",
+                                            color = PocketTextMuted,
+                                            fontSize = 13.sp
+                                        )
+                                    }
+                                    inner()
+                                }
+                            )
+
+                            // Submit Button
+                            val canSubmit = promptInput.isNotBlank()
+                            Box(
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clip(CircleShape)
+                                    .background(if (canSubmit) PocketPrimaryBlue else PocketBorder)
+                                    .clickable(enabled = canSubmit) {
+                                        val text = promptInput.trim()
+                                        if (text.isNotBlank()) {
+                                            promptInput = ""
+                                            onAskCopilot(text)
+                                        }
+                                    },
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.Send,
+                                    contentDescription = "Send",
+                                    tint = if (canSubmit) Color.White else PocketTextMuted,
+                                    modifier = Modifier.size(15.dp)
+                                )
+                            }
+                        }
+                    }
+
+                    // Quick starter templates chips
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState()),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        quickTemplates.forEach { (label, prompt) ->
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(PocketSurfaceElevated)
+                                    .border(1.dp, PocketBorder, RoundedCornerShape(8.dp))
+                                    .clickable {
+                                        promptInput = prompt
+                                    }
+                                    .padding(horizontal = 9.dp, vertical = 5.dp)
+                            ) {
+                                Text(
+                                    text = label,
+                                    color = PocketTextSecondary,
+                                    fontSize = 11.5.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // 4. Quick Action Tiles (2x2 Grid: New Project, Instant Sandbox, Open/Import, Terminal)
+        item {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    HomeActionCard(
+                        title = "New Project",
+                        subtitle = "Create workspace",
+                        icon = Icons.Default.Add,
+                        accentColor = PocketPrimaryBlue,
+                        onClick = {
+                            newProjectName = ""
+                            showCreateDialog = true
+                        },
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    HomeActionCard(
+                        title = "Quick Sandbox",
+                        subtitle = "Instant container",
+                        icon = Icons.Default.Bolt,
+                        accentColor = PocketCyan,
+                        onClick = onCreateQuickProject,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    HomeActionCard(
+                        title = "Import Project",
+                        subtitle = "ZIP or Git clone",
+                        icon = Icons.Default.FolderOpen,
+                        accentColor = PocketEmerald,
+                        onClick = onViewAllProjects,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    HomeActionCard(
+                        title = "Linux Terminal",
+                        subtitle = "Full ARM64 shell",
+                        icon = Icons.Default.Terminal,
+                        accentColor = PocketTextSecondary,
+                        onClick = onOpenTerminal,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+        }
+
+        // 5. Recent Workspaces Header & List
         item {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Row(
@@ -286,17 +502,17 @@ fun PocketHomeScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Recent Projects",
+                        text = "Recent Workspaces",
                         color = PocketTextPrimary,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold
                     )
                     if (state.projects.isNotEmpty()) {
                         Text(
-                            text = "See all (${state.projects.size})",
+                            text = "View all (${state.projects.size})",
                             color = PocketPrimaryBlue,
                             fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium,
+                            fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.clickable(onClick = onViewAllProjects)
                         )
                     }
@@ -305,34 +521,41 @@ fun PocketHomeScreen(
                 if (recentProjects.isEmpty()) {
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp),
+                        shape = RoundedCornerShape(14.dp),
                         color = PocketSurface,
                         border = androidx.compose.foundation.BorderStroke(1.dp, PocketBorder)
                     ) {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 24.dp, horizontal = 16.dp),
+                                .padding(vertical = 28.dp, horizontal = 16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.FolderOpen,
-                                contentDescription = null,
-                                tint = PocketTextMuted,
-                                modifier = Modifier.size(32.dp)
-                            )
+                            Box(
+                                modifier = Modifier
+                                    .size(44.dp)
+                                    .clip(CircleShape)
+                                    .background(PocketSurfaceElevated),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.FolderOpen,
+                                    contentDescription = null,
+                                    tint = PocketTextMuted,
+                                    modifier = Modifier.size(22.dp)
+                                )
+                            }
                             Text(
-                                text = "No recent projects yet",
+                                text = "No workspaces yet",
                                 color = PocketTextPrimary,
-                                fontSize = 14.sp,
+                                fontSize = 14.5.sp,
                                 fontWeight = FontWeight.SemiBold
                             )
                             Text(
-                                text = "Create a new project or bring an existing one to get started.",
+                                text = "Start with a new project or instant sandbox above.",
                                 color = PocketTextSecondary,
-                                fontSize = 12.sp,
-                                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                fontSize = 12.sp
                             )
                         }
                     }
@@ -344,87 +567,115 @@ fun PocketHomeScreen(
                         recentProjects.forEach { project ->
                             key(project.id) {
                                 Surface(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .clickable { onOpenProject(project) },
-                                shape = RoundedCornerShape(12.dp),
-                                color = PocketSurface,
-                                border = androidx.compose.foundation.BorderStroke(1.dp, PocketBorder)
-                            ) {
-                                Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(horizontal = 14.dp, vertical = 12.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
+                                        .clip(RoundedCornerShape(12.dp))
+                                        .clickable { onOpenProject(project) },
+                                    shape = RoundedCornerShape(12.dp),
+                                    color = PocketSurface,
+                                    border = androidx.compose.foundation.BorderStroke(1.dp, PocketBorder)
                                 ) {
                                     Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 14.dp, vertical = 12.dp),
                                         verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                        modifier = Modifier.weight(1f)
+                                        horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        Box(
-                                            modifier = Modifier
-                                                .size(38.dp)
-                                                .clip(RoundedCornerShape(8.dp))
-                                                .background(PocketSurfaceElevated),
-                                            contentAlignment = Alignment.Center
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                            modifier = Modifier.weight(1f)
                                         ) {
-                                            Icon(
-                                                imageVector = Icons.Default.Folder,
-                                                contentDescription = null,
-                                                tint = PocketPrimaryBlue,
-                                                modifier = Modifier.size(20.dp)
-                                            )
+                                            Box(
+                                                modifier = Modifier
+                                                    .size(38.dp)
+                                                    .clip(RoundedCornerShape(8.dp))
+                                                    .background(
+                                                        if (project.kind == ProjectKind.QUICK_PROJECT)
+                                                            PocketCyan.copy(alpha = 0.12f)
+                                                        else PocketPrimaryBlue.copy(alpha = 0.12f)
+                                                    ),
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                Icon(
+                                                    imageVector = if (project.kind == ProjectKind.QUICK_PROJECT)
+                                                        Icons.Default.Bolt
+                                                    else Icons.Default.Folder,
+                                                    contentDescription = null,
+                                                    tint = if (project.kind == ProjectKind.QUICK_PROJECT)
+                                                        PocketCyan
+                                                    else PocketPrimaryBlue,
+                                                    modifier = Modifier.size(20.dp)
+                                                )
+                                            }
+                                            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                                                Row(
+                                                    verticalAlignment = Alignment.CenterVertically,
+                                                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                                                ) {
+                                                    Text(
+                                                        text = project.name,
+                                                        color = PocketTextPrimary,
+                                                        fontSize = 14.sp,
+                                                        fontWeight = FontWeight.SemiBold,
+                                                        maxLines = 1,
+                                                        overflow = TextOverflow.Ellipsis
+                                                    )
+                                                    if (project.kind == ProjectKind.QUICK_PROJECT) {
+                                                        Box(
+                                                            modifier = Modifier
+                                                                .clip(RoundedCornerShape(4.dp))
+                                                                .background(PocketCyan.copy(alpha = 0.12f))
+                                                                .padding(horizontal = 4.dp, vertical = 1.dp)
+                                                        ) {
+                                                            Text(
+                                                                text = "Sandbox",
+                                                                color = PocketCyan,
+                                                                fontSize = 9.5.sp,
+                                                                fontWeight = FontWeight.Bold
+                                                            )
+                                                        }
+                                                    }
+                                                }
+                                                Text(
+                                                    text = if (project.rootPath.isNotBlank()) project.rootPath else "/workspace/${project.slug}",
+                                                    color = PocketTextMuted,
+                                                    fontSize = 11.sp,
+                                                    maxLines = 1,
+                                                    overflow = TextOverflow.Ellipsis,
+                                                    fontFamily = FontFamily.Monospace
+                                                )
+                                                Text(
+                                                    text = "${project.language.ifBlank { "General" }} · ${project.formattedUpdatedAt}",
+                                                    color = PocketTextSecondary,
+                                                    fontSize = 11.sp,
+                                                    maxLines = 1
+                                                )
+                                            }
                                         }
-                                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                                            Text(
-                                                text = project.name,
-                                                color = PocketTextPrimary,
-                                                fontSize = 14.sp,
-                                                fontWeight = FontWeight.SemiBold,
-                                                maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis
-                                            )
-                                            Text(
-                                                text = if (project.rootPath.isNotBlank()) project.rootPath else "/workspace/${project.slug}",
-                                                color = PocketTextMuted,
-                                                fontSize = 11.5.sp,
-                                                maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis,
-                                                fontFamily = FontFamily.Monospace
-                                            )
-                                            Text(
-                                                text = "${project.language.ifBlank { "General" }} · ${project.formattedUpdatedAt}",
-                                                color = PocketTextSecondary,
-                                                fontSize = 11.sp,
-                                                maxLines = 1
-                                            )
-                                        }
-                                    }
 
-                                    Icon(
-                                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                                        contentDescription = "Open",
-                                        tint = PocketTextMuted,
-                                        modifier = Modifier.size(18.dp)
-                                    )
+                                        Icon(
+                                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                                            contentDescription = "Open",
+                                            tint = PocketTextMuted,
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
                                 }
                             }
-                        }
                         }
                     }
                 }
             }
         }
 
-        // 6. Community & Updates (Telegram Channel & Group)
+        // 6. Community & Telegram Support Card
         if (showCommunityCard) {
             item {
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(14.dp),
                     color = PocketSurface,
                     border = androidx.compose.foundation.BorderStroke(1.dp, PocketBorder)
                 ) {
@@ -454,7 +705,7 @@ fun PocketHomeScreen(
                                         painter = painterResource(R.drawable.ic_telegram),
                                         contentDescription = "Telegram",
                                         tint = Color.Unspecified,
-                                        modifier = Modifier.size(22.dp)
+                                        modifier = Modifier.size(20.dp)
                                     )
                                 }
                                 Column {
@@ -465,16 +716,15 @@ fun PocketHomeScreen(
                                         fontWeight = FontWeight.SemiBold
                                     )
                                     Text(
-                                        text = "Official updates & support",
+                                        text = "Official updates & discussion",
                                         color = PocketTextSecondary,
                                         fontSize = 11.sp
                                     )
                                 }
                             }
 
-                            // Dismiss / Hide button
                             Text(
-                                text = "Hide",
+                                text = "Dismiss",
                                 color = PocketTextMuted,
                                 fontSize = 11.5.sp,
                                 modifier = Modifier
@@ -488,7 +738,6 @@ fun PocketHomeScreen(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            // Channel button
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
@@ -497,7 +746,10 @@ fun PocketHomeScreen(
                                     .border(1.dp, PocketBorder, RoundedCornerShape(8.dp))
                                     .clickable {
                                         try {
-                                            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://t.me/PocketIDE"))
+                                            val intent = android.content.Intent(
+                                                android.content.Intent.ACTION_VIEW,
+                                                android.net.Uri.parse("https://t.me/PocketIDE")
+                                            )
                                             context.startActivity(intent)
                                         } catch (_: Exception) {}
                                     }
@@ -512,7 +764,6 @@ fun PocketHomeScreen(
                                 )
                             }
 
-                            // Group button
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
@@ -521,7 +772,10 @@ fun PocketHomeScreen(
                                     .border(1.dp, PocketBorder, RoundedCornerShape(8.dp))
                                     .clickable {
                                         try {
-                                            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://t.me/PocketIDECommunity"))
+                                            val intent = android.content.Intent(
+                                                android.content.Intent.ACTION_VIEW,
+                                                android.net.Uri.parse("https://t.me/PocketIDECommunity")
+                                            )
                                             context.startActivity(intent)
                                         } catch (_: Exception) {}
                                     }
@@ -529,7 +783,7 @@ fun PocketHomeScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "💬 Community",
+                                    text = "💬 Discussion",
                                     color = PocketTextPrimary,
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.SemiBold
@@ -539,35 +793,9 @@ fun PocketHomeScreen(
                     }
                 }
             }
-        } else {
-            item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { showCommunityCard = true }
-                        .padding(vertical = 6.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_telegram),
-                        contentDescription = null,
-                        tint = Color.Unspecified,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Spacer(Modifier.width(6.dp))
-                    Text(
-                        text = "Pocket IDE Telegram & Community",
-                        color = PocketTextSecondary,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                }
-            }
         }
 
-        // Bottom clearance for nav bar
+        // Bottom clearance for floating nav bar
         item {
             Spacer(Modifier.height(72.dp))
         }
@@ -615,9 +843,62 @@ fun PocketHomeScreen(
                 }
             },
             containerColor = PocketSurface,
-            shape = RoundedCornerShape(10.dp)
+            shape = RoundedCornerShape(12.dp)
         )
     }
 }
 
-
+@Composable
+private fun HomeActionCard(
+    title: String,
+    subtitle: String,
+    icon: ImageVector,
+    accentColor: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .clickable(onClick = onClick),
+        shape = RoundedCornerShape(12.dp),
+        color = PocketSurface,
+        border = androidx.compose.foundation.BorderStroke(1.dp, PocketBorder)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(34.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(accentColor.copy(alpha = 0.12f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = accentColor,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
+            Column {
+                Text(
+                    text = title,
+                    color = PocketTextPrimary,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    text = subtitle,
+                    color = PocketTextSecondary,
+                    fontSize = 11.sp
+                )
+            }
+        }
+    }
+}

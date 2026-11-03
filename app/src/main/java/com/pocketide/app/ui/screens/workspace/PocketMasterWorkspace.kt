@@ -470,14 +470,17 @@ fun PocketMasterWorkspace(
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .navigationBarsPadding(),
+                    .navigationBarsPadding()
+                    .padding(horizontal = 14.dp, vertical = 6.dp),
+                shape = RoundedCornerShape(16.dp),
                 color = PocketSurface,
-                border = BorderStroke(1.dp, PocketBorder)
+                border = BorderStroke(1.dp, PocketBorder),
+                shadowElevation = 6.dp
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 6.dp, horizontal = 4.dp),
+                        .padding(vertical = 5.dp, horizontal = 4.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -860,9 +863,10 @@ private fun WorkspaceDockItem(
 ) {
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(6.dp))
+            .clip(RoundedCornerShape(10.dp))
+            .background(if (isActive) PocketPrimaryBlue.copy(alpha = 0.12f) else Color.Transparent)
             .clickable(onClick = onClick)
-            .padding(vertical = 4.dp),
+            .padding(vertical = 5.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -879,23 +883,23 @@ private fun WorkspaceDockItem(
                 if (statusDot != null) {
                     Box(
                         modifier = Modifier
-                            .size(6.dp)
-                            .offset(x = 2.dp, y = (-1).dp)
+                            .size(7.dp)
+                            .offset(x = 3.dp, y = (-1).dp)
                             .clip(CircleShape)
                             .background(statusDot)
                     )
                 } else if (badge != null) {
                     Box(
                         modifier = Modifier
-                            .offset(x = 6.dp, y = (-2).dp)
-                            .clip(RoundedCornerShape(3.dp))
-                            .background(PocketPrimaryBlue.copy(alpha = 0.2f))
-                            .padding(horizontal = 3.dp, vertical = 0.5.dp)
+                            .offset(x = 8.dp, y = (-3).dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(PocketPrimaryBlue)
+                            .padding(horizontal = 4.dp, vertical = 1.dp)
                     ) {
                         Text(
                             text = badge,
-                            color = PocketPrimaryBlue,
-                            fontSize = 9.sp,
+                            color = Color.White,
+                            fontSize = 8.5.sp,
                             fontFamily = FontFamily.Monospace,
                             fontWeight = FontWeight.Bold
                         )
@@ -905,8 +909,8 @@ private fun WorkspaceDockItem(
             Text(
                 text = label,
                 color = if (isActive) PocketPrimaryBlue else PocketTextMuted,
-                fontSize = 11.sp,
-                fontWeight = if (isActive) FontWeight.SemiBold else FontWeight.Normal
+                fontSize = 10.5.sp,
+                fontWeight = if (isActive) FontWeight.Bold else FontWeight.Medium
             )
         }
     }

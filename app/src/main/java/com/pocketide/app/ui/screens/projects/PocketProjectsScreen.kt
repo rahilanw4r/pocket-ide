@@ -81,7 +81,7 @@ import com.pocketide.app.ui.components.PocketPrimaryButton
 import com.pocketide.app.ui.components.PocketSecondaryButton
 import com.pocketide.app.ui.theme.PocketAmber
 import com.pocketide.app.ui.theme.PocketBorder
-import com.pocketide.app.ui.theme.PocketDarkPalette
+import com.pocketide.app.ui.theme.PocketObsidian
 import com.pocketide.app.ui.theme.PocketEmerald
 import com.pocketide.app.ui.theme.PocketPrimaryBlue
 import com.pocketide.app.ui.theme.PocketRose
@@ -152,7 +152,7 @@ fun PocketProjectsScreen(
         state = listState,
         modifier = modifier
             .fillMaxSize()
-            .background(PocketDarkPalette.background),
+            .background(PocketObsidian),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {

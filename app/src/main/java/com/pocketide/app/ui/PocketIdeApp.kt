@@ -2052,16 +2052,16 @@ private fun RootScreenHost(
                     modifier = Modifier
                         .fillMaxWidth()
                         .navigationBarsPadding()
-                        .padding(horizontal = 12.dp, vertical = 5.dp),
-                    shape = RoundedCornerShape(14.dp),
+                        .padding(horizontal = 14.dp, vertical = 6.dp),
+                    shape = RoundedCornerShape(16.dp),
                     color = PocketSurface,
                     border = BorderStroke(1.dp, PocketBorder),
-                    shadowElevation = 3.dp
+                    shadowElevation = 6.dp
                 ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 4.dp, horizontal = 2.dp),
+                            .padding(vertical = 6.dp, horizontal = 4.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -2070,27 +2070,28 @@ private fun RootScreenHost(
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
-                                    .clip(RoundedCornerShape(8.dp))
-                                    .background(if (selected) PocketSurfaceElevated else Color.Transparent)
+                                    .heightIn(min = 44.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(if (selected) PocketPrimaryBlue.copy(alpha = 0.12f) else Color.Transparent)
                                     .clickable { screen = tab }
-                                    .padding(vertical = 5.dp),
+                                    .padding(vertical = 6.dp),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.spacedBy(2.dp)
+                                    verticalArrangement = Arrangement.spacedBy(3.dp)
                                 ) {
                                     Icon(
                                         imageVector = tab.icon,
                                         contentDescription = tab.label,
                                         tint = if (selected) PocketPrimaryBlue else PocketTextMuted,
-                                        modifier = Modifier.size(18.dp)
+                                        modifier = Modifier.size(20.dp)
                                     )
                                     Text(
                                         text = tab.label,
                                         color = if (selected) PocketPrimaryBlue else PocketTextMuted,
-                                        fontSize = 10.sp,
-                                        fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
+                                        fontSize = 10.5.sp,
+                                        fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
                                         maxLines = 1
                                     )
                                 }
@@ -2114,8 +2115,8 @@ private fun RootScreenHost(
                     onOpenDeveloper = { showDeveloperScreen = true },
                     onOpenTerminal = { screen = RootScreen.TERMINAL },
                     onOpenMore = { screen = RootScreen.MORE },
-                    onAskCopilot = { _ ->
-                        viewModel.createQuickProject()
+                    onAskCopilot = { prompt ->
+                        viewModel.startAiTaskFromPrompt(prompt)
                     },
                 )
                 RootScreen.PROJECTS -> PocketProjectsScreen(

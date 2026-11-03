@@ -102,7 +102,7 @@ fun PocketIDEStudioScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(PocketDarkPalette.background)
+            .background(PocketObsidian)
     ) {
         // Studio Top Bar
         Row(
@@ -565,7 +565,7 @@ private fun DiffFileCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(6.dp))
-                        .background(PocketDarkPalette.background)
+                        .background(PocketObsidian)
                         .horizontalScroll(rememberScrollState())
                         .padding(8.dp)
                 ) {
@@ -607,8 +607,15 @@ private fun CodeEditorView(
     onAiAction: (String) -> Unit = {}
 ) {
     var content by remember(initialContent) { mutableStateOf(initialContent) }
+    val isModified = content != initialContent
 
-    Column(modifier = Modifier.fillMaxSize().background(PocketDarkPalette.background)) {
+    val quickSymbols = listOf(
+        "{", "}", "(", ")", "[", "]", ";", "=", "\"", "'",
+        "<", ">", "/", "\\", ":", "_", "-", "+", "*", "$",
+        "&", "|", "!", "TAB"
+    )
+
+    Column(modifier = Modifier.fillMaxSize().background(PocketObsidian)) {
         // Editor Top Bar
         Row(
             modifier = Modifier
@@ -618,20 +625,62 @@ private fun CodeEditorView(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.weight(1f)
+            ) {
                 IconButton(onClick = onClose, modifier = Modifier.size(28.dp)) {
                     Icon(Icons.Default.Close, contentDescription = "Close", tint = PocketTextSecondary, modifier = Modifier.size(16.dp))
                 }
-                Text(
-                    text = filePath.substringAfterLast('/'),
-                    color = PocketTextPrimary,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Monospace
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Text(
+                        text = filePath.substringAfterLast('/'),
+                        color = PocketTextPrimary,
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.Monospace,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    if (isModified) {
+                        Box(
+                            modifier = Modifier
+                                .size(6.dp)
+                                .clip(CircleShape)
+                                .background(PocketAmber)
+                        )
+                    }
+                }
             }
-            IconButton(onClick = { onSave(content) }, modifier = Modifier.size(28.dp)) {
-                Icon(Icons.Default.Save, contentDescription = "Save", tint = PocketPrimaryBlue, modifier = Modifier.size(16.dp))
+
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                if (isModified) {
+                    Text(
+                        text = "Unsaved",
+                        color = PocketAmber,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(end = 4.dp)
+                    )
+                }
+                IconButton(
+                    onClick = { onSave(content) },
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(if (isModified) PocketPrimaryBlue else PocketSurface)
+                ) {
+                    Icon(
+                        Icons.Default.Save,
+                        contentDescription = "Save",
+                        tint = if (isModified) Color.White else PocketTextMuted,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
             }
         }
 
@@ -641,39 +690,105 @@ private fun CodeEditorView(
             }
         } else {
             val lines = remember(content) { content.lines() }
+            val verticalScroll = rememberScrollState()
+            val horizontalScroll = rememberScrollState()
+
             Box(modifier = Modifier.weight(1f)) {
                 Row(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp)
-                        .verticalScroll(rememberScrollState())
-                        .horizontalScroll(rememberScrollState())
+                        .background(PocketObsidian)
                 ) {
-                    // Line numbers
-                    Column(modifier = Modifier.padding(end = 12.dp)) {
+                    // Pinned Line Numbers Gutter: scrolls vertically in sync with text, pinned horizontally
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(42.dp)
+                            .background(PocketSurface)
+                            .verticalScroll(verticalScroll)
+                            .padding(vertical = 8.dp, horizontal = 4.dp),
+                        horizontalAlignment = Alignment.End
+                    ) {
                         lines.indices.forEach { idx ->
                             Text(
                                 text = "${idx + 1}",
                                 color = PocketTextMuted,
                                 fontSize = 11.5.sp,
                                 fontFamily = FontFamily.Monospace,
-                                lineHeight = 18.sp
+                                lineHeight = 19.sp
                             )
                         }
                     }
-                    // Editable Content
-                    BasicTextField(
-                        value = content,
-                        onValueChange = { content = it },
-                        textStyle = TextStyle(
-                            color = PocketTextPrimary,
-                            fontSize = 11.5.sp,
-                            fontFamily = FontFamily.Monospace,
-                            lineHeight = 18.sp
-                        ),
-                        cursorBrush = SolidColor(PocketPrimaryBlue),
-                        modifier = Modifier.fillMaxWidth()
+
+                    // Gutter subtle vertical divider
+                    Box(
+                        modifier = Modifier
+                            .width(1.dp)
+                            .fillMaxHeight()
+                            .background(PocketBorder)
                     )
+
+                    // Code Editor Area: scrolls vertically (synced) and horizontally
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .verticalScroll(verticalScroll)
+                            .horizontalScroll(horizontalScroll)
+                            .padding(vertical = 8.dp, horizontal = 10.dp)
+                    ) {
+                        BasicTextField(
+                            value = content,
+                            onValueChange = { content = it },
+                            textStyle = TextStyle(
+                                color = PocketTextPrimary,
+                                fontSize = 11.5.sp,
+                                fontFamily = FontFamily.Monospace,
+                                lineHeight = 19.sp
+                            ),
+                            cursorBrush = SolidColor(PocketPrimaryBlue),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
+            }
+
+            // Mobile Coding Symbol Strip (Crucial for mobile ergonomics)
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = PocketSurfaceElevated,
+                border = BorderStroke(1.dp, PocketBorder)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState())
+                        .padding(horizontal = 6.dp, vertical = 4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    quickSymbols.forEach { sym ->
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(4.dp))
+                                .background(PocketSurface)
+                                .border(1.dp, PocketBorder, RoundedCornerShape(4.dp))
+                                .clickable {
+                                    val insertion = if (sym == "TAB") "  " else sym
+                                    content += insertion
+                                }
+                                .padding(horizontal = 9.dp, vertical = 5.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = sym,
+                                color = PocketTextPrimary,
+                                fontSize = 11.5.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = FontFamily.Monospace
+                            )
+                        }
+                    }
                 }
             }
 

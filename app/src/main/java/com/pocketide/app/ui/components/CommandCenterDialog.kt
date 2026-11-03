@@ -211,7 +211,7 @@ fun CommandCenterDialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
-            shape = RoundedCornerShape(8.dp),
+            shape = RoundedCornerShape(16.dp),
             color = PocketSurface,
             border = androidx.compose.foundation.BorderStroke(1.dp, PocketBorder)
         ) {
@@ -222,14 +222,14 @@ fun CommandCenterDialog(
                         .fillMaxWidth()
                         .padding(horizontal = 14.dp, vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(24.dp)
-                            .clip(RoundedCornerShape(4.dp))
+                            .size(26.dp)
+                            .clip(RoundedCornerShape(6.dp))
                             .background(PocketSurfaceElevated)
-                            .border(1.dp, PocketBorder, RoundedCornerShape(4.dp)),
+                            .border(1.dp, PocketBorder, RoundedCornerShape(6.dp)),
                         contentAlignment = Alignment.Center
                     ) {
                         Text("⌘", color = PocketPrimaryBlue, fontSize = 13.sp, fontWeight = FontWeight.Bold)
@@ -243,7 +243,7 @@ fun CommandCenterDialog(
                             .focusRequester(focusRequester),
                         textStyle = TextStyle(
                             color = PocketTextPrimary,
-                            fontSize = 13.sp,
+                            fontSize = 13.5.sp,
                             fontWeight = FontWeight.Medium
                         ),
                         cursorBrush = SolidColor(PocketPrimaryBlue),
@@ -251,7 +251,7 @@ fun CommandCenterDialog(
                         decorationBox = { innerTextField ->
                             if (query.isEmpty()) {
                                 Text(
-                                    text = "Search files, commands and actions…",
+                                    text = "Search commands and actions…",
                                     color = PocketTextMuted,
                                     fontSize = 13.sp
                                 )
@@ -276,7 +276,7 @@ fun CommandCenterDialog(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(max = 280.dp)
+                        .heightIn(max = 340.dp)
                         .padding(vertical = 4.dp)
                 ) {
                     if (filteredActions.isEmpty()) {
@@ -284,7 +284,7 @@ fun CommandCenterDialog(
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 24.dp),
+                                    .padding(vertical = 28.dp),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
@@ -300,43 +300,64 @@ fun CommandCenterDialog(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable { action.action() }
-                                    .padding(horizontal = 12.dp, vertical = 7.dp),
+                                    .padding(horizontal = 14.dp, vertical = 9.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                                     modifier = Modifier.weight(1f)
                                 ) {
-                                    Icon(
-                                        imageVector = action.icon,
-                                        contentDescription = null,
-                                        tint = if (action.id == "sandbox" || action.id == "run") PocketEmerald else PocketTextSecondary,
-                                        modifier = Modifier.size(17.dp)
-                                    )
-                                    Text(
-                                        text = action.title,
-                                        color = PocketTextPrimary,
-                                        fontSize = 12.5.sp,
-                                        fontWeight = FontWeight.Medium,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
+                                    Box(
+                                        modifier = Modifier
+                                            .size(30.dp)
+                                            .clip(RoundedCornerShape(6.dp))
+                                            .background(
+                                                if (action.id == "sandbox" || action.id == "run")
+                                                    PocketEmerald.copy(alpha = 0.12f)
+                                                else PocketSurfaceElevated
+                                            ),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            imageVector = action.icon,
+                                            contentDescription = null,
+                                            tint = if (action.id == "sandbox" || action.id == "run") PocketEmerald else PocketPrimaryBlue,
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                    }
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Text(
+                                            text = action.title,
+                                            color = PocketTextPrimary,
+                                            fontSize = 13.sp,
+                                            fontWeight = FontWeight.SemiBold,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                        Text(
+                                            text = action.subtitle,
+                                            color = PocketTextSecondary,
+                                            fontSize = 11.sp,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    }
                                 }
 
                                 if (action.tag != null) {
                                     Box(
                                         modifier = Modifier
-                                            .clip(RoundedCornerShape(3.dp))
+                                            .clip(RoundedCornerShape(4.dp))
                                             .background(PocketSurfaceElevated)
-                                            .border(1.dp, PocketBorder, RoundedCornerShape(3.dp))
-                                            .padding(horizontal = 5.dp, vertical = 1.dp)
+                                            .border(1.dp, PocketBorder, RoundedCornerShape(4.dp))
+                                            .padding(horizontal = 6.dp, vertical = 2.dp)
                                     ) {
                                         Text(
                                             text = action.tag,
                                             color = PocketPrimaryBlue,
-                                            fontSize = 9.5.sp,
+                                            fontSize = 10.sp,
                                             fontFamily = FontFamily.Monospace,
                                             fontWeight = FontWeight.SemiBold
                                         )

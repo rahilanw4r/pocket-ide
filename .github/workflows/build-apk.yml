@@ -61,13 +61,15 @@ jobs:
           ### Pocket IDE ${TAG}
           <!-- versionCode: ${VERSION_CODE} -->
 
-          **Fault-Tolerant Runtime Setup, Low-Memory Package Recovery, and Staged PHP Installation.**
+          **Impeccable UI/UX Refinement, Mobile Developer Keyboard Strip, and Pinned Code Editor Line Numbers.**
 
           #### What's New:
-          - **Resilient Toolchain Setup**: Optional dev stacks (C/C++, PHP, Android) now gracefully catch system interruptions, process kills, or network drops without aborting the entire Pocket IDE startup.
-          - **Staged PHP Installation**: Split PHP tools installation into lightweight batches (\`unzip\` + \`php-cli\` first, then extensions) to drastically lower peak RAM and prevent Android Low Memory Killer (LMK / SIGKILL) terminations under PRoot.
-          - **Automatic DPKG Lock & Unpack Recovery**: Automatically clears stale apt locks left by killed processes and runs lightweight \`dpkg --configure -a\` recovery to finish configuring packages with minimal memory.
-          - **Instant Retry Recovery**: Tapping "Try again" after any interrupted package installation self-heals the package database and boots straight into the workspace without getting stuck.
+          - **Reimagined Home Screen**: Interactive "What do you want to build?" fast launcher with instant starter template chips (React + Vite, Python, Android Compose, REST API) and a 4-tile quick action grid.
+          - **Pinned Line Numbers in Code Editor**: Fixed horizontal scrolling in the code editor — line numbers remain permanently pinned in a dedicated left gutter while code scrolls horizontally.
+          - **Mobile Developer Symbol Strip**: On-screen keyboard symbol row directly inside the code editor (\`{ } ( ) [ ] ; = " ' < > / \ : _ - + * $ & | ! TAB\`) for rapid typing without switching keyboard pages.
+          - **Dynamic Theming & Contrast Fix**: Removed hardcoded dark palette leaks across all screens to ensure seamless light and dark mode adaptation.
+          - **Floating Navigation Dock**: Upgraded both root and workspace docks to sleek, elevated floating bars with larger icons, smooth active state pills, and status badges.
+          - **Two-Line Command Center**: Enhanced the Command Center (⌘) dialog with descriptive subtitles and clear action classifications.
           EOF
 
           gh release create "$TAG" "$APK_NAME" \

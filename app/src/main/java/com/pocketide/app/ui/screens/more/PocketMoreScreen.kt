@@ -63,7 +63,7 @@ import com.pocketide.app.R
 import com.pocketide.app.ui.AppUiState
 import com.pocketide.app.ui.theme.AppThemeMode
 import com.pocketide.app.ui.theme.PocketBorder
-import com.pocketide.app.ui.theme.PocketDarkPalette
+import com.pocketide.app.ui.theme.PocketObsidian
 import com.pocketide.app.ui.theme.PocketPrimaryBlue
 import com.pocketide.app.ui.theme.PocketSurface
 import com.pocketide.app.ui.theme.PocketSurfaceElevated
@@ -90,7 +90,7 @@ fun PocketMoreScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(PocketDarkPalette.background),
+            .background(PocketObsidian),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {

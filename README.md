@@ -21,7 +21,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Android-9%2B-3DDC84?style=flat-square" alt="Android 9+">
   <img src="https://img.shields.io/badge/ARM64-only-555555?style=flat-square" alt="ARM64">
-  <img src="https://img.shields.io/badge/Version-1.0.37-2563EB?style=flat-square" alt="Version 1.0.37">
+  <img src="https://img.shields.io/badge/Version-1.0.38-2563EB?style=flat-square" alt="Version 1.0.38">
   <img src="https://img.shields.io/badge/Telegram-@PocketIDE-229ED9?style=flat-square&logo=telegram" alt="Telegram">
   <img src="https://img.shields.io/badge/License-MIT-555555?style=flat-square" alt="MIT License">
 </p>
@@ -30,7 +30,7 @@ Pocket IDE is a mobile-first Android development environment with an isolated Li
 
 It is designed around one idea: **your phone should be able to do real development work, not just edit a few lines of code.**
 
-> **Status:** Pocket IDE v1.0.37 brings a resilient PRoot Linux runtime, complete developer toolchains, and background AI coding agents directly to ARM64 Android devices.
+> **Status:** Pocket IDE v1.0.38 brings a resilient PRoot Linux runtime, complete developer toolchains, and background AI coding agents directly to ARM64 Android devices.
 
 ---
 
